@@ -83,37 +83,3 @@
 input [type="button"] {
   color: pink;
 }
-
-/* table of cars */
-.table-container table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table-container thead {
-  background-color: #aaa;
-  color: #fff;
-  text-align: left;
-  text-transform: capitalize;
-}
-
-.table-container tbody tr {
-  height: 3em;
-}
-
-.table-container thead th,
-.table-container tbody td {
-  padding: 5px;
-}
-.table-container tbody tr:nth-child(odd) {
-  background-color: #eee;
-}
-
-.table-container tbody tr:nth-child(even) {
-  background-color: #ffa;
-}
-
-.add-new-car {
-  margin-top: 1em;
-}
-/*end of table of cars */
