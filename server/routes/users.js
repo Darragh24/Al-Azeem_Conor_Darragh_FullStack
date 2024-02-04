@@ -6,6 +6,12 @@ const bcrypt = require("bcryptjs"); // needed for password encryption
 
 const jwt = require("jsonwebtoken");
 
+const fs = require("fs");
+const JWT_PRIVATE_KEY = fs.readFileSync(
+  process.env.JWT_PRIVATE_KEY_FILENAME,
+  "utf8"
+);
+
 // IMPORTANT
 // Obviously, in a production release, you should never have the code below, as it allows a user to delete a database collection
 // The code below is for development testing purposes only
@@ -54,7 +60,7 @@ router.post(`/users/register/:name/:email/:password`, (req, res) => {
               if (data) {
                 const token = jwt.sign(
                   { email: data.email, accessLevel: data.accessLevel },
-                  process.env.JWT_PRIVATE_KEY,
+                  JWT_PRIVATE_KEY,
                   { algorithm: "HS256", expiresIn: process.env.JWT_EXPIRY }
                 );
 
@@ -81,7 +87,7 @@ router.post(`/users/login/:email/:password`, (req, res) => {
         if (result) {
           const token = jwt.sign(
             { email: data.email, accessLevel: data.accessLevel },
-            process.env.JWT_PRIVATE_KEY,
+            JWT_PRIVATE_KEY,
             { algorithm: "HS256", expiresIn: process.env.JWT_EXPIRY }
           );
 

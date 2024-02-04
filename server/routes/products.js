@@ -4,6 +4,11 @@ const productsModel = require(`../models/products`);
 
 const jwt = require("jsonwebtoken");
 
+const JWT_PRIVATE_KEY = fs.readFileSync(
+  process.env.JWT_PRIVATE_KEY_FILE,
+  "utf8"
+);
+
 router.get(`/products`, (req, res) => {
   productsModel.find((error, data) => {
     res.json(data);
@@ -13,7 +18,7 @@ router.get(`/products`, (req, res) => {
 router.get(`/products/:id`, (req, res) => {
   jwt.verify(
     req.headers.authorization,
-    process.env.JWT_PRIVATE_KEY,
+    JWT_PRIVATE_KEY,
     { algorithm: "HS256" },
     (err, decodedToken) => {
       if (err) {
@@ -30,7 +35,7 @@ router.get(`/products/:id`, (req, res) => {
 router.post(`/products`, (req, res) => {
   jwt.verify(
     req.headers.authorization,
-    process.env.JWT_PRIVATE_KEY,
+    JWT_PRIVATE_KEY,
     { algorithm: "HS256" },
     (err, decodedToken) => {
       if (err) {
@@ -65,7 +70,7 @@ router.post(`/products`, (req, res) => {
 router.put(`/products/:id`, (req, res) => {
   jwt.verify(
     req.headers.authorization,
-    process.env.JWT_PRIVATE_KEY,
+    JWT_PRIVATE_KEY,
     { algorithm: "HS256" },
     (err, decodedToken) => {
       if (err) {
@@ -109,7 +114,7 @@ router.put(`/products/:id`, (req, res) => {
 router.delete(`/products/:id`, (req, res) => {
   jwt.verify(
     req.headers.authorization,
-    process.env.JWT_PRIVATE_KEY,
+    JWT_PRIVATE_KEY,
     { algorithm: "HS256" },
     (err, decodedToken) => {
       if (err) {
