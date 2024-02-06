@@ -1,0 +1,35 @@
+.nav-container
+{
+    background-color: red;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.link-container
+{
+    background-color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+
+.button {
+    background-color: firebrick;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+  }
+
+
+  .button:hover{
+    background-color: firebrick;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+  }
