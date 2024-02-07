@@ -4,6 +4,7 @@ import AllProducts from "./components/AllProducts";
 import EditProduct from "./components/EditProduct";
 import AddProduct from "./components/AddProduct";
 import DeleteProduct from "./components/DeleteProduct";
+import ProductPage from "./components/ProductPage";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Register from "./components/Register";
@@ -29,6 +30,7 @@ export default class App extends Component {
           <Route exact path="/AllProducts" component={AllProducts} />
           <Route exact path="/Login" component={Login} />
           <Route exact path="/Register" component={Register} />
+          <Route exact path="/ProductPage/:id" component={ProductPage} />
           <LoggedInRoute exact path="/Logout" component={Logout} />
           <AdminRoute exact path="/AddProduct" component={AddProduct} />
           <AdminRoute exact path="/EditProduct/:id" component={EditProduct} />

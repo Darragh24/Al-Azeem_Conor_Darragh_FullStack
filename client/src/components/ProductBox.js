@@ -8,28 +8,40 @@ export default class ProductBox extends Component {
   render() {
     return (
       <div className="box-container">
-        <img src="https://placehold.co/200x200" alt="React Image" />
-        <p>Name: {this.props.product.name}</p>
-        <p>Colour: {this.props.product.colour}</p>
-        <p>Price: {this.props.product.price}</p>
-        <p>Size: {this.props.product.size}</p>
+        <Link to={"/ProductPage/" + this.props.product._id}>
+          <img src="https://placehold.co/200x200" alt="" />
+        </Link>
 
-        {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-          <div>
-            <Link
-              className="green-button"
-              to={"/EditProduct/" + this.props.product._id}
-            >
-              Edit
-            </Link>
-            <Link
-              className="red-button"
-              to={"/DeleteProduct/" + this.props.product._id}
-            >
-              Delete
-            </Link>
+        <div className="info-button-container">
+          <div className="box-info-container">
+            <p>{this.props.product.name}</p>
+            <p>€{this.props.product.price}</p>
           </div>
-        ) : null}
+          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            <div className="box-button-container">
+              <Link
+                className="edit-button"
+                to={"/EditProduct/" + this.props.product._id}
+              >
+                <i className="fa fa-pencil" />
+              </Link>
+              <Link
+                className="del-button"
+                to={"/DeleteProduct/" + this.props.product._id}
+              >
+                <i className="fa fa-trash-o" />
+              </Link>
+            </div>
+          ) : null}
+          <Link
+            className="atc-button"
+            to={"/DeleteProduct/" + this.props.product._id}
+          >
+            <p>
+              +<i className="fa fa-shopping-cart" />
+            </p>
+          </Link>
+        </div>
       </div>
     );
   }

@@ -1,56 +1,52 @@
-*{
+* {
   margin: 0px;
   padding: 0px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-.nav-container
-{
-    margin: 0px;
-    padding: 0px;
-    background-color: red;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 30px;
+.nav-container {
+  margin: 0px;
+  padding: 0px;
+  background-color: red;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+  width: 100%;
 }
 
-.link-container
-{
-    display: flex;
-    justify-content: space-between;
-    text-decoration: none;
+.link-container {
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
 }
-
 
 .button {
-    background-color: red;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-decoration: none;
-    color: white;
-  }
+  background-color: red;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: none;
+  color: white;
+}
 
+.button:hover {
+  background-color: firebrick;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: none;
+  color: white;
+}
 
-  .button:hover{
-    background-color: firebrick;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-decoration: none;
-    color: white;
-  }
+.login-button {
+  background-color: white;
+  border-radius: 2px;
+  text-decoration: none;
+}
 
-  .login-button{
-    background-color: white;
-    border-radius: 2px;
-    text-decoration: none;
-    
-  }
-
-  .register-button{
-    background-color: white;
-    border-radius: 2px;
-    text-decoration: none;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
+.register-button {
+  background-color: white;
+  border-radius: 2px;
+  text-decoration: none;
+  margin-left: 5px;
+  margin-right: 5px;
+}
