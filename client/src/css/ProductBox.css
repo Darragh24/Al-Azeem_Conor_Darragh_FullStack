@@ -1,0 +1,8 @@
+.box-container{
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: auto;
+    margin: 20px;
+}

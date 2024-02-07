@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Logout from "./Logout";
 import { ACCESS_LEVEL_GUEST } from "../config/global_constants";
 
-import "../css/nav.css";
+import "../css/Nav.css";
+
 export default class Nav extends Component {
   /*constructor(props) {
     super(props);
@@ -32,10 +33,10 @@ export default class Nav extends Component {
           </div>
         ) : (
           <div>
-            <Link className="green-button" to={"/Login"}>
+            <Link className="login-button" to={"/Login"}>
               Login
             </Link>
-            <Link className="blue-button" to={"/Register"}>
+            <Link className="register-button" to={"/Register"}>
               Register
             </Link>{" "}
           </div>

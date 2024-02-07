@@ -1,0 +1,46 @@
+.green-button{
+    background-color: #00ff2f;
+    color: white;
+    text-decoration: none;
+    padding: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.blue-button{
+    background-color: #0048ff;
+    color: white;
+    text-decoration: none;
+    padding: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.red-button{
+    background-color: #ff0000;
+    color: white;
+    text-decoration: none;
+    padding: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+
+.green-button:hover{
+    background-color: #2fef2f;
+    color: white;
+    text-decoration: none;
+}
+
+.blue-button:hover{
+    background-color: #3c6ff1;
+    color: white;
+    text-decoration: none;
+}
+
+.red-button:hover{
+    background-color: #fa4949;
+    color: white;
+    text-decoration: none;
+}

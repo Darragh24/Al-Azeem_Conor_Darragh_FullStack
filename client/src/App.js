@@ -10,7 +10,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import LoggedInRoute from "./components/LoggedInRoute";
 import AdminRoute from "./components/AdminRoute";
-
+import "./css/Main.css";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
 
 if (typeof localStorage.accessLevel === "undefined") {

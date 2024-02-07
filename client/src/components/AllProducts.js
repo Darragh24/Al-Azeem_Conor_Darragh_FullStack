@@ -5,7 +5,7 @@ import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
 import { Link } from "react-router-dom";
 import { ACCESS_LEVEL_ADMIN } from "../config/global_constants";
-
+import "../css/AllProducts.css";
 export default class AllProducts extends Component {
   constructor(props) {
     super(props);
