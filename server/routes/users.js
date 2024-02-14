@@ -88,6 +88,7 @@ router.post(
                     name: req.params.name,
                     email: req.params.email,
                     password: hash,
+                    profilePhotoFilename: req.file.filename,
                   },
                   (err, data) => {
                     if (data) {
