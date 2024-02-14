@@ -29,6 +29,14 @@ export default class Nav extends Component {
         </div>
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
+            {localStorage.profilePhoto !== "null" ? (
+              <img
+                className="profile-pic"
+                id="profilePhoto"
+                src={`data:;base64,${localStorage.profilePhoto}`}
+                alt=""
+              />
+            ) : null}
             <Logout />
           </div>
         ) : (

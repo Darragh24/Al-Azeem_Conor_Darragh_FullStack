@@ -1,11 +1,9 @@
-*{
-    font-family: 'Poppins', sans-serif;
+* {
+  font-family: "Poppins", sans-serif;
 }
 
-
-.collection-container
-{
-    display:flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap
+.collection-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
