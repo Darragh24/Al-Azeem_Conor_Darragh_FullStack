@@ -15,7 +15,7 @@ export default class Nav extends Component {
   render() {
     return (
       <div className="nav-container">
-        Brand Name
+        ThreadTrove
         <div className="link-container">
           <Link className="button" to={"/Home"}>
             Home

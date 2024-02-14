@@ -85,3 +85,7 @@
 .pill-button:active {
   background-color: grey; /* Change color when selected */
 }
+
+.quantity {
+  width: 7%;
+}

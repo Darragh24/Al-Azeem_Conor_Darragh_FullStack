@@ -10,6 +10,10 @@ export default class ProductBox extends Component {
 
     this.state = {
       product: [],
+      quantity: 0,
+      item_price: 0,
+      size: "",
+      total: 0,
     };
   }
 
@@ -27,6 +31,27 @@ export default class ProductBox extends Component {
       content.style.maxHeight = content.scrollHeight + "px";
     }
   };
+
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  validateSize() {
+    const size = String(this.state.size);
+
+    return (
+      size === "XL" ||
+      size === "L" ||
+      size === "M" ||
+      size === "S" ||
+      size === "XS"
+    );
+  }
+
+  validateQuantity() {
+    const quantity = parseInt(this.state.quantity);
+    return quantity >= 1 && quantity <= 100;
+  }
 
   componentDidMount() {
     axios
@@ -65,13 +90,50 @@ export default class ProductBox extends Component {
               <p>This is the product description</p>
 
               <h3>Quantity</h3>
-              <input type="text" name="quantity" />
+              <input
+                className="quantity"
+                type="number"
+                name="quantity"
+                min="1"
+                max="100"
+                onChange={this.handleChange}
+              />
               <div className="pill-container">
-                <button class="pill-button">XL</button>
-                <button class="pill-button">L</button>
-                <button class="pill-button">M</button>
-                <button class="pill-button">S</button>
-                <button class="pill-button">XS</button>
+                <button
+                  class="pill-button"
+                  value="size"
+                  onClick={this.handleChange}
+                >
+                  XL
+                </button>
+                <button
+                  class="pill-button"
+                  value="size"
+                  onClick={this.handleChange}
+                >
+                  L
+                </button>
+                <button
+                  class="pill-button"
+                  value="size"
+                  onClick={this.handleChange}
+                >
+                  M
+                </button>
+                <button
+                  class="pill-button"
+                  value="size"
+                  onClick={this.handleChange}
+                >
+                  S
+                </button>
+                <button
+                  class="pill-button"
+                  value="size"
+                  onClick={this.handleChange}
+                >
+                  XS
+                </button>
               </div>
               <button class="collapsible" onClick={this.handleClick}>
                 Open Section 1

@@ -33,10 +33,7 @@ export default class ProductBox extends Component {
               </Link>
             </div>
           ) : null}
-          <Link
-            className="atc-button"
-            to={"/DeleteProduct/" + this.props.product._id}
-          >
+          <Link className="atc-button" to={"//"}>
             <p>
               +<i className="fa fa-shopping-cart" />
             </p>
