@@ -63,9 +63,7 @@ export default class ProductBox extends Component {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
           } else {
-            console.log("Records read");
             this.setState({ product: res.data });
-            console.log("Data:", res.data);
           }
         } else {
           console.log("Record not found");
@@ -135,7 +133,7 @@ export default class ProductBox extends Component {
                   XS
                 </button>
               </div>
-              <button class="collapsible" onClick={this.handleClick}>
+              <button className="collapsible" onClick={this.handleClick}>
                 Open Section 1
               </button>
               <div class="content">

@@ -9,6 +9,7 @@ let usersSchema = new mongoose.Schema(
       type: Number,
       default: parseInt(process.env.ACCESS_LEVEL_NORMAL_USER),
     },
+    profilePhotoFilename: { type: String, default: "" },
   },
   {
     collection: `users`,

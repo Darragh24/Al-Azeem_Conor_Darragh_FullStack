@@ -21,7 +21,6 @@ export default class AllProducts extends Component {
         if (res.data.errorMessage) {
           console.log(res.data.errorMessage);
         } else {
-          console.log("Records read");
           this.setState({ products: res.data });
         }
       } else {
@@ -31,7 +30,6 @@ export default class AllProducts extends Component {
   }
 
   render() {
-    console.log(this.state.products);
     return (
       <div className="main-container">
         <Nav />
