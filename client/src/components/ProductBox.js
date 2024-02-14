@@ -8,7 +8,7 @@ export default class ProductBox extends Component {
   render() {
     return (
       <div className="box-container">
-        <img src="https://placehold.co/200x200" alt="React Image" />
+        <img src="https://placehold.co/200x200" alt="React" />
         <p>Name: {this.props.product.name}</p>
         <p>Colour: {this.props.product.colour}</p>
         <p>Price: {this.props.product.price}</p>
