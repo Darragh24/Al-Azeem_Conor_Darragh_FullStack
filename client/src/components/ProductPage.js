@@ -4,7 +4,7 @@ import { SERVER_HOST } from "../config/global_constants";
 import Nav from "./Nav";
 import "../css/ProductPage.css";
 
-export default class ProductBox extends Component {
+export default class ProductPage extends Component {
   constructor(props) {
     super(props);
 
@@ -14,6 +14,7 @@ export default class ProductBox extends Component {
       item_price: 0,
       size: "",
       total: 0,
+      loading: true, // Add a loading state
     };
   }
 
@@ -63,7 +64,9 @@ export default class ProductBox extends Component {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
           } else {
-            this.setState({ product: res.data });
+            this.setState({ product: res.data, loading: false });
+            console.log("Succesful Request");
+            console.log("Product response", this.state.product);
           }
         } else {
           console.log("Record not found");
@@ -78,7 +81,9 @@ export default class ProductBox extends Component {
 
         <div className="content-container">
           <div className="left-container">
-            <img src="https://placehold.co/400x400" alt="" />
+            {this.state.product.photos.map((photo) => (
+              <img key={photo._id} id={photo._id} alt="" />
+            ))}
           </div>
           <div className="right-container">
             <div className="title-container">
@@ -98,35 +103,35 @@ export default class ProductBox extends Component {
               />
               <div className="pill-container">
                 <button
-                  class="pill-button"
+                  className="pill-button"
                   value="size"
                   onClick={this.handleChange}
                 >
                   XL
                 </button>
                 <button
-                  class="pill-button"
+                  className="pill-button"
                   value="size"
                   onClick={this.handleChange}
                 >
                   L
                 </button>
                 <button
-                  class="pill-button"
+                  className="pill-button"
                   value="size"
                   onClick={this.handleChange}
                 >
                   M
                 </button>
                 <button
-                  class="pill-button"
+                  className="pill-button"
                   value="size"
                   onClick={this.handleChange}
                 >
                   S
                 </button>
                 <button
-                  class="pill-button"
+                  className="pill-button"
                   value="size"
                   onClick={this.handleChange}
                 >
@@ -136,7 +141,7 @@ export default class ProductBox extends Component {
               <button className="collapsible" onClick={this.handleClick}>
                 Open Section 1
               </button>
-              <div class="content">
+              <div className="content">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -144,10 +149,10 @@ export default class ProductBox extends Component {
                   laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
               </div>
-              <button class="collapsible" onClick={this.handleClick}>
+              <button className="collapsible" onClick={this.handleClick}>
                 Open Section 2
               </button>
-              <div class="content">
+              <div className="content">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -155,10 +160,10 @@ export default class ProductBox extends Component {
                   laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
               </div>
-              <button class="collapsible" onClick={this.handleClick}>
+              <button className="collapsible" onClick={this.handleClick}>
                 Open Section 3
               </button>
-              <div class="content">
+              <div className="content">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.

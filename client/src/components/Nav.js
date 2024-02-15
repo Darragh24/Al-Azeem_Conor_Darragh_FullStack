@@ -15,7 +15,7 @@ export default class Nav extends Component {
   render() {
     return (
       <div className="nav-container">
-        ThreadTrove
+        Brand
         <div className="link-container">
           <Link className="button" to={"/Home"}>
             Home
@@ -28,7 +28,7 @@ export default class Nav extends Component {
           </Link>
         </div>
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
-          <div className="logout">
+          <div className="logout-container">
             {localStorage.profilePhoto !== "null" ? (
               <img
                 className="profile-pic"

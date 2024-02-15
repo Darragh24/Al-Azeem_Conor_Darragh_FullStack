@@ -14,6 +14,7 @@ export default class AddProduct extends Component {
       colour: "",
       price: "",
       size: "",
+      selectedFiles: null,
       redirectToDisplayAllProducts:
         localStorage.accessLevel < ACCESS_LEVEL_ADMIN,
     };
@@ -27,39 +28,45 @@ export default class AddProduct extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleFileChange = (e) => {
+    this.setState({ selectedFiles: e.target.files });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
 
-    this.setState({ wasSubmittedAtLeastOnce: true });
+    let formData = new FormData();
 
-    const formInputsState = this.validate();
+    formData.append("name", this.state.name);
+    formData.append("colour", this.state.colour);
+    formData.append("price", this.state.price);
+    formData.append("size", this.state.size);
 
-    if (Object.keys(formInputsState).every((index) => formInputsState[index])) {
-      const productObject = {
-        name: this.state.name,
-        colour: this.state.colour,
-        price: this.state.price,
-        size: this.state.size,
-        wasSubmittedAtLeastOnce: false,
-      };
-
-      axios
-        .post(`${SERVER_HOST}/products`, productObject, {
-          headers: { authorization: localStorage.token },
-        })
-        .then((res) => {
-          if (res.data) {
-            if (res.data.errorMessage) {
-              console.log(res.data.errorMessage);
-            } else {
-              console.log("Record added");
-              this.setState({ redirectToDisplayAllProducts: true });
-            }
-          } else {
-            console.log("Record not added");
-          }
-        });
+    if (this.state.selectedFiles) {
+      for (let i = 0; i < this.state.selectedFiles.length; i++) {
+        formData.append("productPhotos", this.state.selectedFiles[i]);
+      }
     }
+
+    axios
+      .post(`${SERVER_HOST}/products`, formData, {
+        headers: {
+          authorization: localStorage.token,
+          "Content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          if (res.data.errorMessage) {
+            console.log(res.data.errorMessage);
+          } else {
+            console.log("Record added");
+            this.setState({ redirectToDisplayAllProducts: true });
+          }
+        } else {
+          console.log("Record not added");
+        }
+      });
   };
 
   validateName() {
@@ -150,6 +157,18 @@ export default class AddProduct extends Component {
           name="size"
           value={this.state.size}
           onChange={this.handleChange}
+        />
+
+        <label htmlFor="photos">Photos</label>
+        <input
+          type="file"
+          multiple
+          onChange={this.handleFileChange}
+          style={{
+            border: "1px solid #ced4da",
+            borderRadius: ".25rem",
+            padding: ".375rem .75rem",
+          }}
         />
 
         <LinkInClass
