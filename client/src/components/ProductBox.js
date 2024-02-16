@@ -30,8 +30,13 @@ export default class ProductBox extends Component {
     return (
       <div className="box-container">
         <Link to={"/ProductPage/" + this.props.product._id}>
-          {this.props.product.photos.map((photo) => (
-            <img key={photo._id} id={photo._id} alt="" />
+          {this.props.product.photos.map((photo, index) => (
+            <img
+              key={photo._id}
+              id={photo._id}
+              className={`image-${index}`}
+              alt=""
+            />
           ))}
         </Link>
 

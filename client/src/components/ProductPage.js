@@ -107,8 +107,13 @@ export default class ProductPage extends Component {
           <div className="left-container">
             {this.state.product.photos &&
               this.state.product.photos.length > 0 &&
-              this.state.product.photos.map((photo) => (
-                <img key={photo._id} id={photo._id} alt="" />
+              this.state.product.photos.map((photo, index) => (
+                <img
+                  className={`main-image-${index}`}
+                  key={photo._id}
+                  id={photo._id}
+                  alt=""
+                />
               ))}
           </div>
           <div className="right-container">
