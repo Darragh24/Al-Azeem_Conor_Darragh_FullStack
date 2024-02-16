@@ -64,7 +64,7 @@ export default class ProductPage extends Component {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
           } else {
-            this.setState({ product: res.data, loading: false });
+            this.setState({ product: res.data });
             console.log("Succesful Request");
             console.log("Product response", this.state.product);
           }
@@ -72,6 +72,30 @@ export default class ProductPage extends Component {
           console.log("Record not found");
         }
       });
+  }
+  componentDidUpdate(prevState) {
+    /* On initial render the product.photos state isn't loaded
+    So using componentDidUpdate we can make the request to 
+    get the photo using filename after the state is actually updated*/
+    if (this.state.product !== prevState.product) {
+      this.state.product.photos.map((photo) => {
+        return axios
+          .get(`${SERVER_HOST}/products/photo/${photo.filename}`)
+          .then((res) => {
+            if (res.data) {
+              if (res.data.errorMessage) {
+                console.log(res.data.errorMessage);
+              } else {
+                document.getElementById(
+                  photo._id
+                ).src = `data:;base64,${res.data.image}`;
+              }
+            } else {
+              console.log("Record not found");
+            }
+          });
+      });
+    }
   }
 
   render() {
@@ -81,9 +105,11 @@ export default class ProductPage extends Component {
 
         <div className="content-container">
           <div className="left-container">
-            {this.state.product.photos.map((photo) => (
-              <img key={photo._id} id={photo._id} alt="" />
-            ))}
+            {this.state.product.photos &&
+              this.state.product.photos.length > 0 &&
+              this.state.product.photos.map((photo) => (
+                <img key={photo._id} id={photo._id} alt="" />
+              ))}
           </div>
           <div className="right-container">
             <div className="title-container">
