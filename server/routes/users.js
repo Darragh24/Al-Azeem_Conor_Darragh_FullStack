@@ -16,6 +16,29 @@ const upload = multer({ dest: `${process.env.UPLOADED_FILES_FOLDER}` });
 
 const emptyFolder = require("empty-folder");
 
+router.get(`/users`, (req, res) => {
+  usersModel.find((error, data) => {
+    res.json(data);
+  });
+});
+
+router.get(`/users/:id`, (req, res) => {
+  jwt.verify(
+    req.headers.authorization,
+    JWT_PRIVATE_KEY,
+    { algorithm: "HS256" },
+    (err, decodedToken) => {
+      if (err) {
+        res.json({ errorMessage: `User is not logged in` });
+      } else {
+        usersModel.findById(req.params.id, (error, data) => {
+          res.json(data);
+        });
+      }
+    }
+  );
+});
+
 router.post(`/users/reset_user_collection`, (req, res) => {
   usersModel.deleteMany({}, (error, data) => {
     if (data) {
@@ -26,7 +49,12 @@ router.post(`/users/reset_user_collection`, (req, res) => {
         parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS),
         (err, hash) => {
           usersModel.create(
-            { name: "Administrator", email: "admin@admin.com", password: hash },
+            {
+              name: "Administrator",
+              email: "admin@admin.com",
+              password: hash,
+              accessLevel: process.env.ACCESS_LEVEL_ADMIN,
+            },
             (createError, createData) => {
               if (createData) {
                 emptyFolder(
@@ -106,6 +134,7 @@ router.post(
                         "base64",
                         (err, fileData) => {
                           res.json({
+                            _id: data._id,
                             name: data.name,
                             accessLevel: data.accessLevel,
                             profilePhoto: fileData,
@@ -144,6 +173,7 @@ router.post(`/users/login/:email/:password`, (req, res) => {
             (err, fileData) => {
               if (fileData) {
                 res.json({
+                  _id: data._id,
                   name: data.name,
                   accessLevel: data.accessLevel,
                   profilePhoto: fileData,
@@ -151,6 +181,7 @@ router.post(`/users/login/:email/:password`, (req, res) => {
                 });
               } else {
                 res.json({
+                  _id: data._id,
                   name: data.name,
                   accessLevel: data.accessLevel,
                   profilePhoto: null,

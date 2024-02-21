@@ -32,7 +32,8 @@ export default class Login extends Component {
           } // user successfully logged in
           else {
             console.log("User logged in");
-
+            console.log(res.data);
+            localStorage._id = res.data._id;
             localStorage.name = res.data.name;
             localStorage.accessLevel = res.data.accessLevel;
             localStorage.profilePhoto = res.data.profilePhoto;

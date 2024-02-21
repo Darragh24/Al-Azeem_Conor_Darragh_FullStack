@@ -48,6 +48,7 @@ export default class Register extends Component {
           else {
             console.log("User registered and logged in");
 
+            localStorage._id = res.data._id;
             localStorage.name = res.data.name;
             localStorage.accessLevel = res.data.accessLevel;
             localStorage.profilePhoto = res.data.profilePhoto;

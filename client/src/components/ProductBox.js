@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from "../config/global_constants";
 
 import "../css/ProductBox.css";
-
 export default class ProductBox extends Component {
   componentDidMount() {
     this.props.product.photos.map((photo) => {
@@ -25,6 +24,37 @@ export default class ProductBox extends Component {
         });
     });
   }
+
+  handleATC = (e) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+
+    formData.append("productId", this.props.product._id);
+    formData.append("userId", localStorage._id);
+    formData.append("quantity", 1);
+    formData.append("productPrice", this.props.product.price);
+    console.log("userId", localStorage._id);
+    axios
+      .post(`${SERVER_HOST}/cart`, formData, {
+        headers: {
+          authorization: localStorage.token,
+          "Content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          if (res.data.errorMessage) {
+            console.log(res.data.errorMessage);
+          } else {
+            console.log(res.data);
+            console.log("Added to cart");
+          }
+        } else {
+          console.log("Not added to cart");
+        }
+      });
+  };
 
   render() {
     return (
@@ -61,11 +91,11 @@ export default class ProductBox extends Component {
               </Link>
             </div>
           ) : null}
-          <Link className="atc-button" to={"//"}>
+          <button className="atc-button" onClick={this.handleATC}>
             <p>
               +<i className="fa fa-shopping-cart" />
             </p>
-          </Link>
+          </button>
         </div>
       </div>
     );

@@ -38,9 +38,15 @@ export default class Nav extends Component {
               />
             ) : null}
             <Logout />
+            <Link className="button" to={`/Cart/${localStorage._id}`}>
+              <i className="fa fa-shopping-cart" />
+            </Link>
           </div>
         ) : (
           <div>
+            <Link className="button" to={`/Cart/${localStorage._id}`}>
+              <i className="fa fa-shopping-cart" />
+            </Link>
             <Link className="login-button" to={"/Login"}>
               Login
             </Link>
