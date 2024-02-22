@@ -49,17 +49,45 @@ router.post(`/cart`, upload.array(), (req, res) => {
       if (err) {
         res.json({ errorMessage: `Failed to add to cart` });
       } else {
-        let cartDetails = new Object();
-        cartDetails.productId = req.body.productId;
-        cartDetails.userId = req.body.userId;
-        cartDetails.quantity = req.body.quantity;
-        cartDetails.productPrice = req.body.productPrice;
-        cartModel.create(cartDetails, (error, data) => {
-          res.json(data);
-        });
+        cartModel.findOne(
+          { productId: req.body.productId },
+          (error, existingCartItem) => {
+            if (error) {
+              res.json({ errorMessage: `Failed to add to cart` });
+            } else if (existingCartItem) {
+              existingCartItem.quantity += 1;
+              cartModel.updateOne(
+                { _id: existingCartItem._id },
+                { quantity: existingCartItem.quantity },
+                (updateError) => {
+                  if (updateError) {
+                    res.json({
+                      errorMessage: `Failed to update cart item quantity`,
+                    });
+                  } else {
+                    res.json(existingCartItem);
+                  }
+                }
+              );
+            } else {
+              let cartDetails = {
+                productId: req.body.productId,
+                userId: req.body.userId,
+                quantity: req.body.quantity,
+                productPrice: req.body.productPrice,
+              };
+              cartModel.create(cartDetails, (createError, createdCartItem) => {
+                if (createError) {
+                  res.json({ errorMessage: `Failed to add to cart` });
+                } else {
+                  res.json(createdCartItem);
+                }
+              });
+            }
+          }
+        );
       }
     }
   );
 });
-
 module.exports = router;

@@ -201,6 +201,11 @@ export default class ProductPage extends Component {
                   laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
               </div>
+              <button className="atc-button" onClick={this.handleATC}>
+                <p>
+                  +<i className="fa fa-shopping-cart" />
+                </p>
+              </button>
             </div>
           </div>
         </div>
