@@ -66,7 +66,6 @@ export default class ProductPage extends Component {
           } else {
             this.setState({ product: res.data });
             console.log("Succesful Request");
-            console.log("Product response", this.state.product);
           }
         } else {
           console.log("Record not found");

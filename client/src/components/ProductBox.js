@@ -34,7 +34,7 @@ export default class ProductBox extends Component {
     formData.append("userId", localStorage._id);
     formData.append("quantity", 1);
     formData.append("productPrice", this.props.product.price);
-    console.log("userId", localStorage._id);
+
     axios
       .post(`${SERVER_HOST}/cart`, formData, {
         headers: {

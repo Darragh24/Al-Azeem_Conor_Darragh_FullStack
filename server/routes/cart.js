@@ -49,16 +49,11 @@ router.post(`/cart`, upload.array(), (req, res) => {
       if (err) {
         res.json({ errorMessage: `Failed to add to cart` });
       } else {
-        console.log(req.body);
         let cartDetails = new Object();
         cartDetails.productId = req.body.productId;
-        console.log(req.body.productId);
         cartDetails.userId = req.body.userId;
-        console.log(req.body.userId);
         cartDetails.quantity = req.body.quantity;
-        console.log(req.body.quantity);
         cartDetails.productPrice = req.body.productPrice;
-        console.log(req.body.productPrice);
         cartModel.create(cartDetails, (error, data) => {
           res.json(data);
         });
