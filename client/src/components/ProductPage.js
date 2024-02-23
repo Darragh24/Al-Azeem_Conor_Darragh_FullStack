@@ -97,6 +97,37 @@ export default class ProductPage extends Component {
     }
   }
 
+  handleATC = (e) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+
+    formData.append("productId", this.state.product._id);
+    formData.append("userId", localStorage._id);
+    formData.append("quantity", 1);
+    formData.append("productPrice", this.state.product.price);
+
+    axios
+      .post(`${SERVER_HOST}/cart`, formData, {
+        headers: {
+          authorization: localStorage.token,
+          "Content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          if (res.data.errorMessage) {
+            console.log(res.data.errorMessage);
+          } else {
+            console.log(res.data);
+            console.log("Added to cart");
+          }
+        } else {
+          console.log("Not added to cart");
+        }
+      });
+  };
+
   render() {
     return (
       <div className="main-container">

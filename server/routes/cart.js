@@ -90,4 +90,46 @@ router.post(`/cart`, upload.array(), (req, res) => {
     }
   );
 });
+
+router.put(`/cart/:id`, (req, res) => {
+  jwt.verify(
+    req.headers.authorization,
+    JWT_PRIVATE_KEY,
+    { algorithm: "HS256" },
+    (err, decodedToken) => {
+      if (err) {
+        res.json({ errorMessage: `User is not logged in` });
+      }
+      cartModel.findOneAndUpdate(
+        { userId: req.body.userId, productId: req.body.productId },
+        { $inc: { quantity: req.body.quantity } },
+        { returnOriginal: false },
+        (error, data) => {
+          if (error) {
+            res.json({
+              errorMessage: `An error ocurred while updating quantity`,
+            });
+          } else if (data.quantity <= 0) {
+            // If quantity is zero or less, delete the item
+            cartModel.deleteOne(
+              { userId: req.body.userId, productId: req.body.productId },
+              (deleteError) => {
+                if (deleteError) {
+                  res.json({
+                    errorMessage: `An error ocurred while deleting cart item`,
+                  });
+                } else {
+                  res.json({ message: "Item deleted successfully" });
+                }
+              }
+            );
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    }
+  );
+});
+
 module.exports = router;

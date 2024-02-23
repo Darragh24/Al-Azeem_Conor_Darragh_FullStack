@@ -61,7 +61,15 @@
 
 .subtotal-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-end;
   padding-bottom: 5px;
+}
+
+.subtotal-text {
+  color: white;
+}
+
+.subtotal-num {
+  color: white;
 }

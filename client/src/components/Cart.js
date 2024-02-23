@@ -86,6 +86,38 @@ export default class Cart extends Component {
     }
   }
 
+  handleQuantityChange = (e) => {
+    const index = e.target.getAttribute("index");
+    const cartObject = {
+      userId: localStorage._id,
+      productId: this.state.cart[index].productId,
+      quantity: parseInt(e.target.value),
+    };
+    axios
+      .put(`${SERVER_HOST}/cart/${localStorage._id}`, cartObject, {
+        headers: { authorization: localStorage.token },
+      })
+      .then((res) => {
+        if (res.data) {
+          if (res.data.errorMessage) {
+            console.log(res.data.errorMessage);
+          } else {
+            const updatedCart = [...this.state.cart]; // Create a copy of the cart array
+            updatedCart[index] = res.data; // Update the specific item in the copied array
+            this.setState({ cart: updatedCart }); // Set the state with the new array
+            console.log(`Record updated`);
+          }
+        } else {
+          console.log(`Record not updated`);
+        }
+      });
+    let subTotal = 0;
+    this.state.cart.forEach((cartItem) => {
+      subTotal += cartItem.quantity * cartItem.productPrice;
+    });
+    this.setState({ subTotal: subTotal });
+  };
+
   render() {
     return (
       <div className="main-container">
@@ -108,18 +140,44 @@ export default class Cart extends Component {
               <div className="product-name-container">
                 <span>{product.name}</span>{" "}
                 <div className="quantity-container">
-                  <button className="quantity-btn">+</button>
+                  <button
+                    className="quantity-btn"
+                    value={1}
+                    index={index}
+                    onClick={this.handleQuantityChange}
+                  >
+                    +
+                  </button>
                   <span className="item-quantity-text">
                     {this.state.cart[index].quantity}
                   </span>
-                  <button className="quantity-btn">-</button>
+                  <button
+                    className="quantity-btn"
+                    value={-1}
+                    index={index}
+                    onClick={this.handleQuantityChange}
+                  >
+                    -
+                  </button>
                 </div>
               </div>
               <div className="subtotal-container">
-                <span>${this.state.subTotal.toFixed(2)}</span>
+                <span>
+                  $
+                  {(
+                    this.state.cart[index].productPrice *
+                    this.state.cart[index].quantity
+                  ).toFixed(2)}
+                </span>
               </div>
             </div>
           ))}
+          <div className="subtotal-container">
+            <span className="subtotal-text">Subtotal:</span>
+            <span className="subtotal-num">
+              ${this.state.subTotal.toFixed(2)}
+            </span>
+          </div>
         </div>
       </div>
     );
