@@ -87,12 +87,9 @@ router.post(
               let productDetails = new Object();
 
               productDetails.name = req.body.name;
-              console.log(req.body.name);
               productDetails.colour = req.body.colour;
-              console.log(req.body.colour);
               productDetails.price = req.body.price;
               productDetails.size = req.body.size;
-
               productDetails.photos = [];
 
               req.files.map((file, index) => {

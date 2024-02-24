@@ -53,7 +53,7 @@ export default class Cart extends Component {
                 console.log(res.data.errorMessage);
               } else {
                 this.setState((prevState) => ({
-                  products: [...prevState.products, res.data], // Adding the new data to existing products
+                  products: [...prevState.products, res.data],
                 }));
               }
             } else {
@@ -102,9 +102,9 @@ export default class Cart extends Component {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
           } else {
-            const updatedCart = [...this.state.cart]; // Create a copy of the cart array
+            /*const updatedCart = [...this.state.cart]; // Create a copy of the cart array
             updatedCart[index] = res.data; // Update the specific item in the copied array
-            this.setState({ cart: updatedCart }); // Set the state with the new array
+            this.setState({ cart: updatedCart }); // Set the state with the new array*/
             console.log(`Record updated`);
           }
         } else {
