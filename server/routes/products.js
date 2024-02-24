@@ -68,28 +68,16 @@ router.post(
         } else {
           if (!/^[a-zA-Z]+$/.test(req.body.name)) {
             res.json({ errorMessage: `name must be a string` });
-          } else if (!/^[a-zA-Z]+$/.test(req.body.colour)) {
-            res.json({ errorMessage: `Colour must be a string` });
           } else if (req.body.price < 0 || req.body.price > 1000) {
             res.json({
               errorMessage: `Price needs to be between €0 and €1000`,
             });
-          } else if (
-            req.body.size != "XL" &&
-            req.body.size != "L" &&
-            req.body.size != "M" &&
-            req.body.size != "S" &&
-            req.body.size != "XS"
-          ) {
-            res.json({ errorMessage: `Size Needs to be XL,L,M,S,XS` });
           } else {
             if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
               let productDetails = new Object();
 
               productDetails.name = req.body.name;
-              productDetails.colour = req.body.colour;
               productDetails.price = req.body.price;
-              productDetails.size = req.body.size;
               productDetails.photos = [];
 
               req.files.map((file, index) => {
@@ -122,20 +110,9 @@ router.put(`/products/:id`, (req, res) => {
       } else {
         if (!/^[a-zA-Z]+$/.test(req.body.name)) {
           res.json({ errorMessage: `name must be a string` });
-        } else if (!/^[a-zA-Z]+$/.test(req.body.colour)) {
-          res.json({ errorMessage: `Colour must be a string` });
         } else if (req.body.price < 0 || req.body.price > 1000) {
           res.json({ errorMessage: `Price needs to be between €0 and €1000` });
-        } else if (
-          req.body.size != "XL" &&
-          req.body.size != "L" &&
-          req.body.size != "M" &&
-          req.body.size != "S" &&
-          req.body.size != "XS"
-        ) {
-          res.json({ errorMessage: `Size Needs to be XL,L,M,S,XS` });
-        } // input is valid
-        else {
+        } else {
           if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
             productsModel.findByIdAndUpdate(
               req.params.id,

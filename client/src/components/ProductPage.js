@@ -12,7 +12,7 @@ export default class ProductPage extends Component {
       product: [],
       quantity: 0,
       item_price: 0,
-      size: "",
+
       total: 0,
       loading: true, // Add a loading state
     };
@@ -36,18 +36,6 @@ export default class ProductPage extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  validateSize() {
-    const size = String(this.state.size);
-
-    return (
-      size === "XL" ||
-      size === "L" ||
-      size === "M" ||
-      size === "S" ||
-      size === "XS"
-    );
-  }
 
   validateQuantity() {
     const quantity = parseInt(this.state.quantity);
@@ -162,43 +150,7 @@ export default class ProductPage extends Component {
                 max="100"
                 onChange={this.handleChange}
               />
-              <div className="pill-container">
-                <button
-                  className="pill-button"
-                  value="size"
-                  onClick={this.handleChange}
-                >
-                  XL
-                </button>
-                <button
-                  className="pill-button"
-                  value="size"
-                  onClick={this.handleChange}
-                >
-                  L
-                </button>
-                <button
-                  className="pill-button"
-                  value="size"
-                  onClick={this.handleChange}
-                >
-                  M
-                </button>
-                <button
-                  className="pill-button"
-                  value="size"
-                  onClick={this.handleChange}
-                >
-                  S
-                </button>
-                <button
-                  className="pill-button"
-                  value="size"
-                  onClick={this.handleChange}
-                >
-                  XS
-                </button>
-              </div>
+
               <button className="collapsible" onClick={this.handleClick}>
                 Open Section 1
               </button>

@@ -7,9 +7,9 @@ let productPhotosSchema = new mongoose.Schema({
 let productsSchema = new mongoose.Schema(
   {
     name: { type: String },
-    colour: { type: String },
+
     price: { type: Number },
-    size: { type: String },
+
     photos: [productPhotosSchema],
   },
   {

@@ -11,9 +11,7 @@ export default class AddProduct extends Component {
 
     this.state = {
       name: "",
-      colour: "",
       price: "",
-      size: "",
       selectedFiles: null,
       redirectToDisplayAllProducts:
         localStorage.accessLevel < ACCESS_LEVEL_ADMIN,
@@ -38,9 +36,7 @@ export default class AddProduct extends Component {
     let formData = new FormData();
 
     formData.append("name", this.state.name);
-    formData.append("colour", this.state.colour);
     formData.append("price", this.state.price);
-    formData.append("size", this.state.size);
 
     if (this.state.selectedFiles) {
       for (let i = 0; i < this.state.selectedFiles.length; i++) {
@@ -74,34 +70,15 @@ export default class AddProduct extends Component {
     return pattern.test(String(this.state.name));
   }
 
-  validateColour() {
-    const pattern = /^[A-Za-z]+$/;
-    return pattern.test(String(this.state.colour));
-  }
-
   validatePrice() {
     const price = parseInt(this.state.price);
     return price >= 1 && price <= 1000;
   }
 
-  validateSize() {
-    const size = String(this.state.size);
-
-    return (
-      size === "XL" ||
-      size === "L" ||
-      size === "M" ||
-      size === "S" ||
-      size === "XS"
-    );
-  }
-
   validate() {
     return {
       name: this.validateName(),
-      colour: this.validateColour(),
       price: this.validatePrice(),
-      size: this.validateSize(),
     };
   }
 
@@ -135,27 +112,11 @@ export default class AddProduct extends Component {
           onChange={this.handleChange}
         />
 
-        <label htmlFor="colour">Colour</label>
-        <input
-          type="text"
-          name="colour"
-          value={this.state.colour}
-          onChange={this.handleChange}
-        />
-
         <label htmlFor="price">Price</label>
         <input
           type="text"
           name="price"
           value={this.state.price}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="size">Size</label>
-        <input
-          type="text"
-          name="size"
-          value={this.state.size}
           onChange={this.handleChange}
         />
 
