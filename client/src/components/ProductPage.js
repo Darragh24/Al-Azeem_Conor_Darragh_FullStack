@@ -3,6 +3,7 @@ import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
 import Nav from "./Nav";
 import "../css/ProductPage.css";
+import BuyProduct from "./BuyProduct";
 
 export default class ProductPage extends Component {
   constructor(props) {
@@ -137,6 +138,7 @@ export default class ProductPage extends Component {
           <div className="right-container">
             <div className="title-container">
               <h1>{this.state.product.name}</h1>
+              <h3>${this.state.product.price}</h3>
             </div>
             <div className="description-container">
               <p>This is the product description</p>
@@ -149,6 +151,8 @@ export default class ProductPage extends Component {
                 min="1"
                 max="100"
                 onChange={this.handleChange}
+                placeholder="1"
+                value={1}
               />
 
               <button className="collapsible" onClick={this.handleClick}>
@@ -189,6 +193,7 @@ export default class ProductPage extends Component {
                   +<i className="fa fa-shopping-cart" />
                 </p>
               </button>
+              <BuyProduct price={this.state.product.price} />
             </div>
           </div>
         </div>
