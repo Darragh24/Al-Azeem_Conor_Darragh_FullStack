@@ -42,7 +42,7 @@ export default class Cart extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.cart !== prevState.cart) {
-      console.log(this.state.products);
+      console.log("Fetch Products run", this.state.cart);
       let subTotal = 0;
       this.state.cart.map((cartItem) => {
         subTotal += cartItem.quantity * cartItem.productPrice;
@@ -59,6 +59,7 @@ export default class Cart extends Component {
                   (product) => product._id === res.data._id
                 );
                 if (!productExists) {
+                  console.log("Found Product", res.data);
                   this.setState((prevState) => ({
                     products: [...prevState.products, res.data],
                   }));
@@ -72,6 +73,8 @@ export default class Cart extends Component {
         return this.setState({ subTotal: subTotal });
       });
     }
+    console.log("this.state.cart", this.state.cart);
+    console.log("this.state.products", this.state.products);
     if (this.state.products !== prevState.products) {
       this.state.products.map((product) => {
         return product.photos.map((photo) => {
@@ -124,9 +127,14 @@ export default class Cart extends Component {
             updatedCart[index] = res.data;
             this.setState({ cart: updatedCart });
             let subTotal = 0;
+            let updatedProducts;
             this.state.cart.forEach((cartItem) => {
               subTotal += cartItem.quantity * cartItem.productPrice;
+              updatedProducts = this.state.products.filter(
+                (product) => product._id !== cartItem.productId
+              );
             });
+            this.setState({ products: updatedProducts });
             this.setState({ subTotal: subTotal });
             console.log(`Cart updated`);
           }
@@ -206,7 +214,7 @@ export default class Cart extends Component {
                     </div>
                   </div>
                 );
-              } else return <p>No items in cart</p>;
+              } else return <p>Couldn't load products</p>;
             })
           ) : (
             <p>No items in cart</p>
