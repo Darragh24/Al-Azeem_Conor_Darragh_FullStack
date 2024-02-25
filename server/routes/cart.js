@@ -119,7 +119,22 @@ router.put(`/cart/:id`, (req, res) => {
                     errorMessage: `An error ocurred while deleting cart item`,
                   });
                 } else {
-                  res.json({ message: "Item deleted successfully" });
+                  // Cart item successfully deleted, now fetch the remaining cart items
+                  cartModel.find(
+                    { userId: req.body.userId },
+                    (findError, cartItems) => {
+                      if (findError) {
+                        res.json({
+                          errorMessage: `An error occurred while fetching cart items`,
+                        });
+                      }
+                      res.json({
+                        cart: cartItems,
+                        deleteMessage: "Item deleted successfully",
+                        productId: req.body.productId,
+                      });
+                    }
+                  );
                 }
               }
             );

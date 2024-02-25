@@ -27,6 +27,9 @@ export default class Cart extends Component {
         if (res.data) {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
+          } else if (res.data.deleteMessage) {
+            console.log("Did Mount Cart Item removed");
+            this.setState({ cart: res.data.cart });
           } else {
             this.setState({ cart: res.data });
             console.log("Succesful Request");
@@ -39,10 +42,10 @@ export default class Cart extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.cart !== prevState.cart) {
+      console.log(this.state.products);
       let subTotal = 0;
-      this.state.cart.forEach((cartItem) => {
+      this.state.cart.map((cartItem) => {
         subTotal += cartItem.quantity * cartItem.productPrice;
-
         axios
           .get(`${SERVER_HOST}/products/${cartItem.productId}`, {
             headers: { authorization: localStorage.token },
@@ -52,20 +55,26 @@ export default class Cart extends Component {
               if (res.data.errorMessage) {
                 console.log(res.data.errorMessage);
               } else {
-                this.setState((prevState) => ({
-                  products: [...prevState.products, res.data],
-                }));
+                const productExists = this.state.products.some(
+                  (product) => product._id === res.data._id
+                );
+                if (!productExists) {
+                  this.setState((prevState) => ({
+                    products: [...prevState.products, res.data],
+                  }));
+                }
               }
             } else {
               console.log("Record not found");
             }
           });
-        this.setState({ subTotal: subTotal });
+
+        return this.setState({ subTotal: subTotal });
       });
     }
     if (this.state.products !== prevState.products) {
       this.state.products.map((product) => {
-        product.photos.map((photo) => {
+        return product.photos.map((photo) => {
           return axios
             .get(`${SERVER_HOST}/products/photo/${photo.filename}`)
             .then((res) => {
@@ -101,14 +110,28 @@ export default class Cart extends Component {
         if (res.data) {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
+          } else if (res.data.deleteMessage) {
+            this.setState({ cart: res.data.cart });
+            let subTotal = 0;
+
+            this.state.cart.forEach((cartItem) => {
+              subTotal += cartItem.quantity * cartItem.productPrice;
+            });
+
+            this.setState({ subTotal: subTotal });
           } else {
             const updatedCart = [...this.state.cart];
             updatedCart[index] = res.data;
             this.setState({ cart: updatedCart });
-            console.log(`Record updated`);
+            let subTotal = 0;
+            this.state.cart.forEach((cartItem) => {
+              subTotal += cartItem.quantity * cartItem.productPrice;
+            });
+            this.setState({ subTotal: subTotal });
+            console.log(`Cart updated`);
           }
         } else {
-          console.log(`Record not updated`);
+          console.log(`Cart not updated`);
         }
       });
 
@@ -124,13 +147,12 @@ export default class Cart extends Component {
       <div className="main-container">
         <Nav />
         <div className="cart-container">
-          {this.state.cart && this.state.products ? (
+          {this.state.cart.length > 0 && this.state.products ? (
             this.state.cart.map((cartItem, index) => {
               const foundProduct = this.state.products.find(
                 (product) => product._id === cartItem.productId
               );
               if (foundProduct) {
-                console.log("Found Product", foundProduct);
                 return (
                   <div className="cart-product-info-container">
                     <div className="product-photo-container">
@@ -184,11 +206,11 @@ export default class Cart extends Component {
                     </div>
                   </div>
                 );
-              }
+              } else return <p>No items in cart</p>;
             })
           ) : (
             <p>No items in cart</p>
-          )}{" "}
+          )}
           <div className="subtotal-container">
             <span className="subtotal-text">Subtotal:</span>
             <span className="subtotal-num">
