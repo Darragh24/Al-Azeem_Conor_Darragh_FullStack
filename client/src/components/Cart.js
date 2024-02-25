@@ -64,7 +64,7 @@ export default class Cart extends Component {
       });
     }
     if (this.state.products !== prevState.products) {
-      this.state.products.forEach((product) => {
+      this.state.products.map((product) => {
         product.photos.map((photo) => {
           return axios
             .get(`${SERVER_HOST}/products/photo/${photo.filename}`)
@@ -102,15 +102,16 @@ export default class Cart extends Component {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
           } else {
-            /*const updatedCart = [...this.state.cart]; // Create a copy of the cart array
-            updatedCart[index] = res.data; // Update the specific item in the copied array
-            this.setState({ cart: updatedCart }); // Set the state with the new array*/
+            const updatedCart = [...this.state.cart];
+            updatedCart[index] = res.data;
+            this.setState({ cart: updatedCart });
             console.log(`Record updated`);
           }
         } else {
           console.log(`Record not updated`);
         }
       });
+
     let subTotal = 0;
     this.state.cart.forEach((cartItem) => {
       subTotal += cartItem.quantity * cartItem.productPrice;
@@ -123,55 +124,71 @@ export default class Cart extends Component {
       <div className="main-container">
         <Nav />
         <div className="cart-container">
-          {this.state.products.map((product, index) => (
-            <div className="cart-product-info-container">
-              <div className="product-photo-container">
-                {product.photos &&
-                  product.photos.length > 0 &&
-                  product.photos.map((photo, index) => (
-                    <img
-                      className={`cart-main-image-${index}`}
-                      key={photo._id}
-                      id={photo._id}
-                      alt=""
-                    />
-                  ))}
-              </div>
-              <div className="product-name-container">
-                <span>{product.name}</span>{" "}
-                <div className="quantity-container">
-                  <button
-                    className="quantity-btn"
-                    value={1}
-                    index={index}
-                    onClick={this.handleQuantityChange}
-                  >
-                    +
-                  </button>
-                  <span className="item-quantity-text">
-                    {this.state.cart[index].quantity}
-                  </span>
-                  <button
-                    className="quantity-btn"
-                    value={-1}
-                    index={index}
-                    onClick={this.handleQuantityChange}
-                  >
-                    -
-                  </button>
-                </div>
-              </div>
-              <div className="subtotal-container">
-                <span>
-                  $
-                  {(
-                    this.state.cart[index].productPrice *
-                    this.state.cart[index].quantity
-                  ).toFixed(2)}
-                </span>
-              </div>
-            </div>
-          ))}
+          {this.state.cart && this.state.products ? (
+            this.state.cart.map((cartItem, index) => {
+              const foundProduct = this.state.products.find(
+                (product) => product._id === cartItem.productId
+              );
+              if (foundProduct) {
+                console.log("Found Product", foundProduct);
+                return (
+                  <div className="cart-product-info-container">
+                    <div className="product-photo-container">
+                      {foundProduct.photos.map((photo, photoIndex) => (
+                        <img
+                          className={`cart-main-image-${photoIndex}`}
+                          key={photo._id}
+                          id={photo._id}
+                          alt=""
+                        />
+                      ))}
+                    </div>
+                    <div className="product-name-container">
+                      <span>{foundProduct.name}</span>
+
+                      <div className="quantity-container">
+                        <button
+                          className="quantity-btn"
+                          value={1}
+                          index={index}
+                          onClick={this.handleQuantityChange}
+                        >
+                          +
+                        </button>
+
+                        <span className="item-quantity-text">
+                          {this.state.cart[index].quantity}
+                        </span>
+
+                        <button
+                          className="quantity-btn"
+                          value={-1}
+                          index={index}
+                          onClick={this.handleQuantityChange}
+                        >
+                          -
+                        </button>
+                      </div>
+                    </div>
+                    <div className="product-price-container">
+                      <span>
+                        $
+                        {this.state.cart[index] &&
+                        this.state.cart[index].productPrice
+                          ? (
+                              this.state.cart[index].productPrice *
+                              this.state.cart[index].quantity
+                            ).toFixed(2)
+                          : ""}
+                      </span>
+                    </div>
+                  </div>
+                );
+              }
+            })
+          ) : (
+            <p>No items in cart</p>
+          )}{" "}
           <div className="subtotal-container">
             <span className="subtotal-text">Subtotal:</span>
             <span className="subtotal-num">
