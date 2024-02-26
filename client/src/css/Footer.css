@@ -1,0 +1,120 @@
+.footer-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: red;
+  width: 100%;
+  height: 100%;
+}
+
+.contact-form-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.contact-form-h1 {
+  color: white;
+}
+
+.contact-form-h4 {
+  color: red;
+}
+
+.contact-form-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.contact-form-input-container input {
+  width: calc(100% - 100px); /* Adjust to leave space for the button */
+  padding: 10px;
+  border-radius: 6px 0px 0px 6px;
+  border: 1px solid white;
+  box-sizing: border-box;
+  height: 100%;
+  outline: none; /* Change the color to red */
+}
+
+.contact-form-input-container button {
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  padding: 0px;
+  border: none;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  background-color: white;
+  color: red;
+  cursor: pointer;
+}
+.contact-form-input-container button:hover {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid white;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  background-color: red;
+  color: white;
+}
+
+.footer-link-container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 40px;
+}
+
+.info-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: red;
+}
+
+.help-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: red;
+  margin-left: 40px;
+}
+
+.brand-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: red;
+  margin-left: 40px;
+}
+
+.help-button {
+  margin-top: 10px;
+  color: white;
+  background-color: red;
+  text-decoration: none;
+}
+
+.mission {
+  padding-top: 10px;
+  color: white;
+  max-width: 200px;
+}
+
+.our-email {
+  padding-top: 10px;
+  color: white;
+  max-width: 200px;
+}
+
+.our-number {
+  padding-top: 10px;
+  color: white;
+  max-width: 200px;
+}

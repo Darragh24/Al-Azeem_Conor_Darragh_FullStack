@@ -13,6 +13,7 @@ import Register from "./components/Register";
 import Users from "./components/Users";
 import Home from "./components/Home";
 import LoggedInRoute from "./components/LoggedInRoute";
+import PayPalMessage from "./components/PayPalMessage";
 import AdminRoute from "./components/AdminRoute";
 import "./css/Main.css";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
@@ -38,6 +39,11 @@ export default class App extends Component {
           <Route exact path="/Register" component={Register} />
           <Route exact path="/ProductPage/:id" component={ProductPage} />
           <Route exact path="/Cart/:id" component={Cart} />
+          <Route
+            exact
+            path="/PayPalMessage/:messageType/:payPalPaymentID"
+            component={PayPalMessage}
+          />
           <LoggedInRoute exact path="/Logout" component={Logout} />
           <AdminRoute exact path="/AddProduct" component={AddProduct} />
           <AdminRoute exact path="/EditProduct/:id" component={EditProduct} />

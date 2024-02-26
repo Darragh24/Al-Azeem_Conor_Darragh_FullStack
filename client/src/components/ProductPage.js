@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
 import Nav from "./Nav";
+import Footer from "./Footer";
 import "../css/ProductPage.css";
 import BuyProduct from "./BuyProduct";
 
@@ -11,22 +12,18 @@ export default class ProductPage extends Component {
 
     this.state = {
       product: [],
-      quantity: 0,
+      quantity: 1,
       item_price: 0,
-
       total: 0,
-      loading: true, // Add a loading state
+      loading: true,
     };
   }
 
   handleClick = (e) => {
-    // Toggle the active class only for the clicked button
     e.target.classList.toggle("active");
 
-    // Get the next sibling of the clicked button
     var content = e.target.nextElementSibling;
 
-    // Toggle the max-height style for the content
     if (content.style.maxHeight) {
       content.style.maxHeight = null;
     } else {
@@ -151,8 +148,7 @@ export default class ProductPage extends Component {
                 min="1"
                 max="100"
                 onChange={this.handleChange}
-                placeholder="1"
-                value={1}
+                value={this.state.quantity}
               />
 
               <button className="collapsible" onClick={this.handleClick}>
@@ -193,10 +189,15 @@ export default class ProductPage extends Component {
                   +<i className="fa fa-shopping-cart" />
                 </p>
               </button>
-              <BuyProduct price={this.state.product.price} />
+              <BuyProduct
+                price={this.state.product.price * this.state.quantity}
+                productId={this.state.product._id}
+                quantity={this.state.quantity}
+              />
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

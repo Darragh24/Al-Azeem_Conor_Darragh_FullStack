@@ -6,6 +6,7 @@ import { SERVER_HOST } from "../config/global_constants";
 
 import "../css/Cart.css";
 import Nav from "./Nav";
+import BuyProduct from "./BuyProduct";
 
 export default class Cart extends Component {
   constructor(props) {
@@ -28,7 +29,6 @@ export default class Cart extends Component {
           if (res.data.errorMessage) {
             console.log(res.data.errorMessage);
           } else if (res.data.deleteMessage) {
-            console.log("Did Mount Cart Item removed");
             this.setState({ cart: res.data.cart });
           } else {
             this.setState({ cart: res.data });
@@ -42,7 +42,6 @@ export default class Cart extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.cart !== prevState.cart) {
-      console.log("Fetch Products run", this.state.cart);
       let subTotal = 0;
       this.state.cart.map((cartItem) => {
         subTotal += cartItem.quantity * cartItem.productPrice;
@@ -59,7 +58,6 @@ export default class Cart extends Component {
                   (product) => product._id === res.data._id
                 );
                 if (!productExists) {
-                  console.log("Found Product", res.data);
                   this.setState((prevState) => ({
                     products: [...prevState.products, res.data],
                   }));
@@ -73,8 +71,7 @@ export default class Cart extends Component {
         return this.setState({ subTotal: subTotal });
       });
     }
-    console.log("this.state.cart", this.state.cart);
-    console.log("this.state.products", this.state.products);
+
     if (this.state.products !== prevState.products) {
       this.state.products.map((product) => {
         return product.photos.map((photo) => {
@@ -219,12 +216,23 @@ export default class Cart extends Component {
           ) : (
             <p>No items in cart</p>
           )}
-          <div className="subtotal-container">
-            <span className="subtotal-text">Subtotal:</span>
-            <span className="subtotal-num">
-              ${this.state.subTotal.toFixed(2)}
-            </span>
-          </div>
+          {this.state.cart.length > 0 ? (
+            <div>
+              <div className="subtotal-container">
+                <span className="subtotal-text">Subtotal:</span>
+                <span className="subtotal-num">
+                  ${this.state.subTotal.toFixed(2)}
+                </span>
+              </div>
+              <div className="paypal-button">
+                <BuyProduct
+                  price={this.state.subTotal}
+                  productId={this.state.products}
+                  quantity={this.state.quantity}
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     );

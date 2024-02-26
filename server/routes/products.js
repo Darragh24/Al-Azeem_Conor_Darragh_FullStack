@@ -72,12 +72,17 @@ router.post(
             res.json({
               errorMessage: `Price needs to be between €0 and €1000`,
             });
+          } else if (req.body.stock < 0 || req.body.stock > 1000) {
+            res.json({
+              errorMessage: `Stock needs to be between 0 and 1000`,
+            });
           } else {
             if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
               let productDetails = new Object();
 
               productDetails.name = req.body.name;
               productDetails.price = req.body.price;
+              productDetails.stock = req.body.stock;
               productDetails.photos = [];
 
               req.files.map((file, index) => {

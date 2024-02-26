@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProductBox from "./ProductBox";
 import Nav from "./Nav";
 import axios from "axios";
+import Footer from "./Footer";
 import { SERVER_HOST } from "../config/global_constants";
 import { Link } from "react-router-dom";
 import { ACCESS_LEVEL_ADMIN } from "../config/global_constants";
@@ -43,6 +44,7 @@ export default class AllProducts extends Component {
             <ProductBox key={product._id} product={product} />
           ))}
         </div>
+        <Footer />
       </div>
     );
   }

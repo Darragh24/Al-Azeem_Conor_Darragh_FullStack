@@ -12,6 +12,7 @@ export default class AddProduct extends Component {
     this.state = {
       name: "",
       price: "",
+      stock: "",
       selectedFiles: null,
       redirectToDisplayAllProducts:
         localStorage.accessLevel < ACCESS_LEVEL_ADMIN,
@@ -37,6 +38,7 @@ export default class AddProduct extends Component {
 
     formData.append("name", this.state.name);
     formData.append("price", this.state.price);
+    formData.append("stock", this.state.stock);
 
     if (this.state.selectedFiles) {
       for (let i = 0; i < this.state.selectedFiles.length; i++) {
@@ -74,11 +76,16 @@ export default class AddProduct extends Component {
     const price = parseInt(this.state.price);
     return price >= 1 && price <= 1000;
   }
+  validateStock() {
+    const stock = parseInt(this.state.stock);
+    return stock >= 1 && stock <= 1000;
+  }
 
   validate() {
     return {
       name: this.validateName(),
       price: this.validatePrice(),
+      stock: this.validateStock(),
     };
   }
 
@@ -101,7 +108,7 @@ export default class AddProduct extends Component {
 
         {errorMessage}
 
-        <label htmlFor="name">Name</label>
+        <label className="form-label">Name</label>
         <input
           ref={(input) => {
             this.inputToFocus = input;
@@ -112,11 +119,18 @@ export default class AddProduct extends Component {
           onChange={this.handleChange}
         />
 
-        <label htmlFor="price">Price</label>
+        <label className="form-label">Price</label>
         <input
           type="text"
           name="price"
           value={this.state.price}
+          onChange={this.handleChange}
+        />
+        <label className="form-label">Stock</label>
+        <input
+          type="text"
+          name="stock"
+          value={this.state.stock}
           onChange={this.handleChange}
         />
 

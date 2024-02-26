@@ -1,6 +1,3 @@
-
-
-
 .box-container {
   background-color: grey;
   display: flex;
@@ -52,11 +49,11 @@
   padding: 5px;
 }
 
-.image-0{
+.image-0 {
   width: 100%;
   height: 300px;
 }
 
-.image-1{
+.image-1 {
   display: none;
 }
