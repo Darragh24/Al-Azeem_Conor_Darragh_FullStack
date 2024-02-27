@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-
 import axios from "axios";
-
 import { SERVER_HOST } from "../config/global_constants";
-
 import "../css/Cart.css";
 import Nav from "./Nav";
 import BuyProduct from "./BuyProduct";

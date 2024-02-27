@@ -35,20 +35,15 @@ router.get(`/products`, (req, res) => {
 });
 
 router.get(`/products/:id`, (req, res) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
-      if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        productsModel.findById(req.params.id, (error, data) => {
-          res.json(data);
-        });
-      }
+  productsModel.findById(req.params.id, (error, data) => {
+    if (error) {
+      res.json(error);
+    } else if (!data) {
+      res.json({ errorMessage: "Product not found" });
+    } else {
+      res.json(data);
     }
-  );
+  });
 });
 
 router.post(
