@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import "../css/Footer.css";
 import { ACCESS_LEVEL_GUEST } from "../config/global_constants";
 export default class Nav extends Component {
-  /*constructor(props) {
-    super(props);
-  }*/
-
   render() {
     return (
       <div className="footer-container">

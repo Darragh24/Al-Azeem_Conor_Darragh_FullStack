@@ -2,8 +2,35 @@
   font-family: "Poppins", sans-serif;
 }
 
+.heading-container {
+  padding-top: 20px;
+  display: flex;
+  width: 60%;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.heading-h1 {
+  font-size: 60px;
+  font-weight: 100;
+}
+
 .collection-container {
+  width: 60%;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+.product-box-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.tool-buttons-container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  justify-content: space-between;
 }

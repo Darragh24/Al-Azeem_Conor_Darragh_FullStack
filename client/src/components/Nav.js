@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
-import { ACCESS_LEVEL_GUEST } from "../config/global_constants";
+import {
+  ACCESS_LEVEL_GUEST,
+  ACCESS_LEVEL_ADMIN,
+} from "../config/global_constants";
 
 import "../css/Nav.css";
 
 export default class Nav extends Component {
-  /*constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {}*/
-
   render() {
     return (
       <div className="nav-container">
@@ -21,11 +18,16 @@ export default class Nav extends Component {
             Home
           </Link>
           <Link className="button" to={"/AllProducts"}>
-            All Products
+            Shop
           </Link>
           <Link className="button" to={"/AllProducts"}>
             About
           </Link>
+          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            <Link className="button" to={"/Users"}>
+              Users
+            </Link>
+          ) : null}
         </div>
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout-container">
