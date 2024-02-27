@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../css/Footer.css";
-import { ACCESS_LEVEL_GUEST } from "../config/global_constants";
+import { ACCESS_LEVEL_NORMAL_USER } from "../config/global_constants";
 export default class Nav extends Component {
   render() {
     return (
       <div className="footer-container">
-        {!localStorage.accessLevel <= ACCESS_LEVEL_GUEST ? (
+        {localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? (
           <div className="contact-form-container">
             <h1 className="contact-form-h1">Subscribe to our Emails</h1>
             <h4 className="contact-form-h2">
