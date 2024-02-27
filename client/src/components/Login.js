@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
-
+import Nav from "./Nav";
 import LinkInClass from "../components/LinkInClass";
 import { SERVER_HOST } from "../config/global_constants";
-
+import "../css/Form.css";
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -49,45 +49,50 @@ export default class Login extends Component {
 
   render() {
     return (
-      <form
-        className="form-container"
-        noValidate={true}
-        id="loginOrRegistrationForm"
-      >
-        <h2>Login</h2>
+      <div className="main-container">
+        <Nav />
+        <form className="form-container" noValidate={true}>
+          <h2 className="login-h2">Login</h2>
 
-        {this.state.isLoggedIn ? <Redirect to="/AllProducts" /> : null}
+          <h4 className="login-h4">
+            don't have an account?
+            <Link className="create-account-button" to={"/Register"}>
+              Create One
+            </Link>
+          </h4>
+          {this.state.isLoggedIn ? <Redirect to="/AllProducts" /> : null}
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          autoComplete="email"
-          value={this.state.email}
-          onChange={this.handleChange}
-        />
-        <br />
+          <input
+            className="login-input"
+            type="email"
+            name="email"
+            placeholder="Email"
+            autoComplete="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          autoComplete="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <br />
-        <br />
-
-        <LinkInClass
-          value="Login"
-          className="green-button"
-          onClick={this.handleSubmit}
-        />
-        <Link className="red-button" to={"/AllProducts"}>
-          Cancel
-        </Link>
-      </form>
+          <input
+            className="login-input"
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <div className="confirmation-buttons-container">
+            <LinkInClass
+              value="Login"
+              className="form-login-button"
+              onClick={this.handleSubmit}
+            />
+            <Link className="form-cancel-button" to={"/AllProducts"}>
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
     );
   }
 }

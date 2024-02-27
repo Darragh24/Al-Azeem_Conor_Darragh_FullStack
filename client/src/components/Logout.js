@@ -40,7 +40,7 @@ export default class Logout extends Component {
 
         <LinkInClass
           value="Log out"
-          className="red-button"
+          className="logout-button"
           onClick={this.handleSubmit}
         />
       </div>

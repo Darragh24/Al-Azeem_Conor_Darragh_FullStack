@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
+import "../css/PayPalMessage.css";
 
 export default class PayPalMessage extends Component {
   static messageType = { SUCCESS: "success", ERROR: "error", CANCEL: "cancel" };
@@ -8,8 +9,8 @@ export default class PayPalMessage extends Component {
     super(props);
 
     this.state = {
-      redirectToDisplayAllCars: false,
-      buttonColour: "red-button",
+      redirectToDisplayAllProducts: false,
+      colour: "red",
     };
   }
 
@@ -20,7 +21,7 @@ export default class PayPalMessage extends Component {
       this.setState({
         heading: "PayPal Transaction Confirmation",
         message: "Your PayPal transaction was successful.",
-        buttonColour: "green-button",
+        colour: "green",
       });
     } else if (
       this.props.match.params.messageType === PayPalMessage.messageType.CANCEL
@@ -47,30 +48,37 @@ export default class PayPalMessage extends Component {
 
   render() {
     return (
-      <div className="payPalMessage">
-        {this.state.redirectToDisplayAllCars ? (
-          <Redirect to="/DisplayAllCars" />
-        ) : null}
+      <div className="main-container">
+        <div className="payPalMessage">
+          {this.state.redirectToDisplayAllProducts ? (
+            <Redirect to="/AllProducts" />
+          ) : null}
 
-        <h3>{this.state.heading}</h3>
-        <p>{this.props.match.params.message}</p>
-        <p>{this.state.message}</p>
+          <h3 className={`paypal-h3-${this.state.colour}`}>
+            {this.state.heading}
+          </h3>
+          <p className="paypal-p">{this.props.match.params.message}</p>
+          <p className="paypal-p">{this.state.message}</p>
 
-        {this.props.match.params.messageType ===
-        PayPalMessage.messageType.SUCCESS ? (
-          <p>
-            Your PayPal payment confirmation is{" "}
-            <span id="payPalPaymentID">
-              {this.props.match.params.payPalPaymentID}
-            </span>
+          {this.props.match.params.messageType ===
+          PayPalMessage.messageType.SUCCESS ? (
+            <p className="paypal-p">
+              Your PayPal payment confirmation is{" "}
+              <span id="payPalPaymentID">
+                {this.props.match.params.payPalPaymentID}
+              </span>
+            </p>
+          ) : null}
+
+          <p className="paypal-continue-button" id="payPalPaymentIDButton">
+            <Link
+              className={`paypal-${this.state.colour}-button`}
+              to={"/AllProducts"}
+            >
+              Continue
+            </Link>
           </p>
-        ) : null}
-
-        <p id="payPalPaymentIDButton">
-          <Link className={this.state.buttonColour} to={"/DisplayAllCars"}>
-            Continue
-          </Link>
-        </p>
+        </div>
       </div>
     );
   }

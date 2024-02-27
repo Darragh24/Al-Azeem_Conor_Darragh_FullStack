@@ -24,9 +24,21 @@ const createNewSaleDocument = (req, res, next) => {
   return res.json({ success: true });
 };
 
+const getUserSales = (req, res, next) => {
+  salesModel.find({ userId: req.params.id }, (error, data) => {
+    if (error) {
+      res.status(500).json({ errorMessage: "Internal Server Error" });
+    } else {
+      res.json(data);
+    }
+  });
+};
+
 router.post(
   "/sales/:orderID/:productId/:userId/:price/:customerName/:customerEmail",
   createNewSaleDocument
 );
+
+router.get("/sales/:id", getUserSales);
 
 module.exports = router;

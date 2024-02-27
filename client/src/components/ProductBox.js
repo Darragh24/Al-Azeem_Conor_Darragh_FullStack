@@ -72,7 +72,9 @@ export default class ProductBox extends Component {
 
         <div className="info-button-container">
           <div className="box-info-container">
-            <p>{this.props.product.name}</p>
+            <Link to={"/ProductPage/" + this.props.product._id}>
+              <p className="product-name-p">{this.props.product.name}</p>
+            </Link>
             <p>€{this.props.product.price}</p>
           </div>
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
@@ -89,13 +91,19 @@ export default class ProductBox extends Component {
               >
                 <i className="fa fa-trash-o" />
               </Link>
+              <button className="atc-button" onClick={this.handleATC}>
+                <p>
+                  +<i className="fa fa-shopping-cart" />
+                </p>
+              </button>
             </div>
-          ) : null}
-          <button className="atc-button" onClick={this.handleATC}>
-            <p>
-              +<i className="fa fa-shopping-cart" />
-            </p>
-          </button>
+          ) : (
+            <button className="atc-button" onClick={this.handleATC}>
+              <p>
+                +<i className="fa fa-shopping-cart" />
+              </p>
+            </button>
+          )}
         </div>
       </div>
     );

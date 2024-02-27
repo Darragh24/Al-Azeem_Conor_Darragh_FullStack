@@ -23,6 +23,8 @@
 }
 
 .product-box-container {
+  width: 25%;
+  object-fit: cover; /* Scales the image as large as possible while preserving its aspect ratio */
   display: flex;
   justify-content: space-evenly;
 }

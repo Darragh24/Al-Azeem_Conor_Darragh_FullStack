@@ -12,7 +12,11 @@ export default class Nav extends Component {
   render() {
     return (
       <div className="nav-container">
-        Brand
+        <p className="brand-name-p">
+          <Link className="brand-button" to={"/Home"}>
+            Brand
+          </Link>
+        </p>
         <div className="link-container">
           <Link className="button" to={"/Home"}>
             Home
@@ -45,16 +49,13 @@ export default class Nav extends Component {
             </Link>
           </div>
         ) : (
-          <div>
+          <div className="login-container">
+            <Link className="login-button" to={"/Login"}>
+              <i class="fa fa-user"></i>
+            </Link>
             <Link className="button" to={`/Cart/${localStorage._id}`}>
               <i className="fa fa-shopping-cart" />
             </Link>
-            <Link className="login-button" to={"/Login"}>
-              Login
-            </Link>
-            <Link className="register-button" to={"/Register"}>
-              Register
-            </Link>{" "}
           </div>
         )}
       </div>

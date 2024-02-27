@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
-
+import Nav from "./Nav";
 import LinkInClass from "../components/LinkInClass";
 
 import { SERVER_HOST } from "../config/global_constants";
@@ -64,73 +64,81 @@ export default class Register extends Component {
 
   render() {
     return (
-      <form
-        className="form-container"
-        noValidate={true}
-        id="loginOrRegistrationForm"
-        onSubmit={this.handleSubmit}
-      >
-        {this.state.isRegistered ? <Redirect to="/AllProducts" /> : null}
+      <div className="main-container">
+        <Nav />
+        <form
+          className="form-container"
+          noValidate={true}
+          id="loginOrRegistrationForm"
+          onSubmit={this.handleSubmit}
+        >
+          {this.state.isRegistered ? <Redirect to="/AllProducts" /> : null}
 
-        <h2>New User Registration</h2>
+          <h2 className="register-h2">Create an account</h2>
+          <h4 className="login-h4">
+            Already have an account?
+            <Link className="create-account-button" to={"/Login"}>
+              Sign in
+            </Link>
+          </h4>
 
-        <input
-          name="name"
-          type="text"
-          placeholder="Name"
-          autoComplete="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-          ref={(input) => {
-            this.inputToFocus = input;
-          }}
-        />
-        <br />
+          <input
+            className="register-input"
+            name="name"
+            type="text"
+            placeholder="Name"
+            autoComplete="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+            ref={(input) => {
+              this.inputToFocus = input;
+            }}
+          />
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          autoComplete="email"
-          value={this.state.email}
-          onChange={this.handleChange}
-        />
-        <br />
+          <input
+            className="register-input"
+            name="email"
+            type="email"
+            placeholder="Email"
+            autoComplete="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          autoComplete="password"
-          title="Password)"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <br />
+          <input
+            className="register-input"
+            name="password"
+            type="password"
+            placeholder="Password"
+            autoComplete="password"
+            title="Password)"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
 
-        <input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm password"
-          autoComplete="confirmPassword"
-          value={this.state.confirmPassword}
-          onChange={this.handleChange}
-        />
-        <br />
-        <br />
-        <input type="file" onChange={this.handleFileChange} />
-        <br />
-        <br />
+          <input
+            className="register-input"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+            autoComplete="confirmPassword"
+            value={this.state.confirmPassword}
+            onChange={this.handleChange}
+          />
 
-        <LinkInClass
-          value="Register New User"
-          className="green-button"
-          onClick={this.handleSubmit}
-        />
-        <Link className="red-button" to={"/AllProducts"}>
-          Cancel
-        </Link>
-      </form>
+          <input type="file" onChange={this.handleFileChange} />
+          <div className="register-confirmation-buttons-container">
+            <LinkInClass
+              value="Register New User"
+              className="form-register-button"
+              onClick={this.handleSubmit}
+            />
+            <Link className="form-register-cancel-button" to={"/AllProducts"}>
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
     );
   }
 }

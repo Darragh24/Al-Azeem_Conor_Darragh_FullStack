@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Nav from "./Nav";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { SERVER_HOST } from "../config/global_constants";
 export default class Users extends Component {
   constructor(props) {
@@ -30,11 +31,44 @@ export default class Users extends Component {
       <div className="main-container">
         <Nav />
         {this.state.users.map((user) => (
-          <div>
-            <p>{user._id}</p>
-            <p>{user.name}</p>
-            <p>{user.email}</p>
-            <p>{user.password}</p>
+          <div className="user-table-container">
+            <tbody className="user-table">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Access Level</th>
+                <th>Sale History</th>
+                <th>Actions</th>
+              </tr>
+              <tr>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.accessLevel}</td>
+
+                <td>
+                  <Link
+                    className="history-button"
+                    to={"/SalesHistory/" + user._id}
+                  >
+                    View History
+                  </Link>
+                </td>
+                <td>
+                  <Link
+                    className="history-button"
+                    to={"/DeleteUser/" + user._id}
+                  >
+                    Edit
+                  </Link>
+                  <Link
+                    className="history-button"
+                    to={"/DeleteUser/" + user._id}
+                  >
+                    Delete
+                  </Link>
+                </td>
+              </tr>
+            </tbody>
           </div>
         ))}
       </div>

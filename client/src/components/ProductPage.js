@@ -185,18 +185,23 @@ export default class ProductPage extends Component {
                 </p>
               </div>
 
-              {!this.state.product.stock < 0 ? (
+              {this.state.product.stock > 0 ? (
                 <div className="buying-buttons">
-                  <button className="atc-button" onClick={this.handleATC}>
+                  <button
+                    className="product-page-atc-button"
+                    onClick={this.handleATC}
+                  >
                     <p>
-                      +<i className="fa fa-shopping-cart" />
+                      Add To Cart +<i className="fa fa-shopping-cart" />
                     </p>
                   </button>
-                  <BuyProduct
-                    price={this.state.product.price * this.state.quantity}
-                    productId={this.state.product._id}
-                    quantity={this.state.quantity}
-                  />
+                  <div className="paypal-buy-button">
+                    <BuyProduct
+                      price={this.state.product.price * this.state.quantity}
+                      productId={this.state.product._id}
+                      quantity={this.state.quantity}
+                    />
+                  </div>
                 </div>
               ) : (
                 <p>Sorry this item is out of stock</p>

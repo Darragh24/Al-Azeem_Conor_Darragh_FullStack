@@ -1,0 +1,46 @@
+.payPalMessage {
+  margin-top: 200px;
+  border: 1px solid black;
+  display: block;
+  width: 400px;
+  height: 200px;
+  background-color: white;
+}
+
+.paypal-h3-green {
+  padding-left: 5px;
+  background-color: #00ff2f;
+}
+
+.paypal-h3-red {
+  padding-left: 5px;
+  background-color: red;
+  color: white;
+}
+
+.paypal-p {
+  padding-left: 5px;
+  padding-top: 5px;
+  color: black;
+}
+
+.paypal-continue-button {
+  padding-left: 5px;
+  padding-top: 20px;
+}
+
+.paypal-green-button {
+  color: black;
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 10px;
+  background-color: #00ff2f;
+}
+
+.paypal-red-button {
+  color: white;
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 100px;
+  background-color: red;
+}

@@ -69,3 +69,46 @@ body,
   text-decoration: none;
   margin: 5px;
 }
+
+.user-table-container {
+  flex-direction: column;
+  display: flex;
+  width: 80%;
+  align-items: center;
+  margin-top: 100px;
+}
+.user-table {
+  background-color: aliceblue;
+}
+
+.history-button {
+  text-decoration: none;
+  padding: 2px;
+  color: white;
+  border-radius: 2px;
+  background-color: black;
+}
+.sales-table-container {
+  flex-direction: column;
+  display: flex;
+  width: 80%;
+  align-items: center;
+  margin-top: 100px;
+}
+.sales-table {
+  background-color: aliceblue;
+}
+
+tbody {
+  margin-top: 20px;
+  background-color: white;
+  border: 2px solid black;
+}
+th {
+  padding: 3px;
+  border: 1px solid black;
+}
+td {
+  padding: 3px;
+  border: 1px solid black;
+}

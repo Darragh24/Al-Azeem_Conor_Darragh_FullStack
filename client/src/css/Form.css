@@ -1,0 +1,133 @@
+.form-container {
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  align-items: center;
+  margin: 200px;
+  width: 30%;
+  background-color: #d9dddc;
+}
+
+.create-account-button {
+  text-decoration: none;
+  color: red;
+}
+
+.create-account-button:hover {
+  text-decoration: underline;
+  color: red;
+}
+
+.confirmation-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-bottom: 50px;
+}
+.register-confirmation-buttons-container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-bottom: 50px;
+}
+
+.login-h2 {
+  margin-top: 20px;
+}
+.register-h2 {
+  margin-top: 20px;
+}
+
+.login-h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.register-h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.login-input {
+  font-size: 13px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid white;
+  width: 50%;
+  height: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.form-login-button {
+  background-color: #008000;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.form-register-button {
+  background-color: #008000;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.form-cancel-button {
+  background-color: #500000;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-register-button:hover {
+  background-color: #009900;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.form-register-cancel-button:hover {
+  background-color: #ff0000;
+}
+
+.form-register-cancel-button {
+  background-color: #500000;
+  width: 140px;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-login-button:hover {
+  background-color: #009900;
+}
+
+.form-cancel-button:hover {
+  background-color: #ff0000;
+}
+
+.register-input {
+  font-size: 13px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid white;
+  width: 50%;
+  height: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
