@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
-
+import "../css/Form.css";
 import LinkInClass from "./LinkInClass";
+import Nav from "./Nav";
 
 import { SERVER_HOST } from "../config/global_constants";
 
@@ -13,6 +14,9 @@ export default class EditProduct extends Component {
     this.state = {
       name: ``,
       price: ``,
+      stock: "",
+      photos: "",
+      selectedFiles: null,
       redirectToDisplayAllProducts: false,
     };
   }
@@ -32,6 +36,8 @@ export default class EditProduct extends Component {
             this.setState({
               name: res.data.name,
               price: res.data.price,
+              stock: res.data.stock,
+              photos: res.data.photos,
             });
           }
         } else {
@@ -44,6 +50,10 @@ export default class EditProduct extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleFileChange = (e) => {
+    this.setState({ selectedFiles: e.target.files });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,15 +62,22 @@ export default class EditProduct extends Component {
     const formInputsState = this.validate();
 
     if (Object.keys(formInputsState).every((index) => formInputsState[index])) {
-      const productObject = {
-        name: this.state.name,
-        price: this.state.price,
-      };
+      let formData = new FormData();
+
+      formData.append("name", this.state.name);
+      formData.append("price", this.state.price);
+      formData.append("stock", this.state.stock);
+
+      if (this.state.selectedFiles) {
+        for (let i = 0; i < this.state.selectedFiles.length; i++) {
+          formData.append("productPhotos", this.state.selectedFiles[i]);
+        }
+      }
 
       axios
         .put(
           `${SERVER_HOST}/products/${this.props.match.params.id}`,
-          productObject,
+          formData,
           {
             headers: { authorization: localStorage.token },
           }
@@ -90,11 +107,16 @@ export default class EditProduct extends Component {
     return price >= 1 && price <= 1000;
   }
 
+  validateStock() {
+    const stock = parseInt(this.state.stock);
+    return stock >= 1 && stock <= 1000;
+  }
+
   validate() {
     return {
       name: this.validateName(),
-
       price: this.validatePrice(),
+      stock: this.validateStock(),
     };
   }
 
@@ -109,41 +131,79 @@ export default class EditProduct extends Component {
       );
     }
     return (
-      <div className="form-container">
-        {this.state.redirectToDisplayAllProducts ? (
-          <Redirect to="/AllProducts" />
-        ) : null}
+      <div className="main-container">
+        <Nav />
+        <div className="form-container">
+          <h2 className="product-form-h2">Edit Product</h2>
+          {this.state.redirectToDisplayAllProducts ? (
+            <Redirect to="/AllProducts" />
+          ) : null}
 
-        {errorMessage}
+          {errorMessage}
+          <div className="input-label-conatiner">
+            <label className="edit-label">Product Name :</label>
+            <input
+              ref={(input) => {
+                this.inputToFocus = input;
+              }}
+              type="text"
+              name="name"
+              className="edit-form-input"
+              value={this.state.name}
+              onChange={this.handleChange}
+              placeholder="Product-Name"
+            />
+          </div>
+          <div className="input-label-conatiner">
+            <label className="edit-label">Price :</label>
+            <input
+              type="text"
+              name="price"
+              className="edit-form-input"
+              value={this.state.price}
+              onChange={this.handleChange}
+              placeholder="Price"
+            />
+          </div>
 
-        <label htmlFor="name">Name</label>
-        <input
-          ref={(input) => {
-            this.inputToFocus = input;
-          }}
-          type="text"
-          name="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
+          <div className="input-label-conatiner">
+            <label className="edit-label">Product Stock :</label>
+            <input
+              type="text"
+              name="stock"
+              className="edit-form-input"
+              value={this.state.stock}
+              onChange={this.handleChange}
+              placeholder="Stock-Quantity"
+            />
+          </div>
+          <div className="photo-upload-container">
+            <input
+              type="file"
+              id="fileInput"
+              className="file-input"
+              multiple
+              onChange={this.handleFileChange}
+              style={{
+                border: "1px solid #ced4da",
+                borderRadius: ".25rem",
+                padding: ".375rem .75rem",
+              }}
+            />
+          </div>
 
-        <label htmlFor="price">Price</label>
-        <input
-          type="text"
-          name="price"
-          value={this.state.price}
-          onChange={this.handleChange}
-        />
+          <div className="add-cancel-container">
+            <LinkInClass
+              value="Edit"
+              className="add-button"
+              onClick={this.handleSubmit}
+            />
 
-        <LinkInClass
-          value="Edit"
-          className="blue-button"
-          onClick={this.handleSubmit}
-        />
-
-        <Link className="red-button" to={"/AllProducts"}>
-          Cancel
-        </Link>
+            <Link className="cancel-button" to={"/AllProducts"}>
+              Cancel
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

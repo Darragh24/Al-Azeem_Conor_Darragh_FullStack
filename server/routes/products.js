@@ -99,38 +99,59 @@ router.post(
   }
 );
 
-router.put(`/products/:id`, (req, res) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
-      if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        if (!/^[a-zA-Z]+$/.test(req.body.name)) {
-          res.json({ errorMessage: `name must be a string` });
-        } else if (req.body.price < 0 || req.body.price > 1000) {
-          res.json({ errorMessage: `Price needs to be between €0 and €1000` });
+router.put(
+  `/products/:id`,
+  upload.array(
+    "productPhotos",
+    parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)
+  ),
+  (req, res) => {
+    jwt.verify(
+      req.headers.authorization,
+      JWT_PRIVATE_KEY,
+      { algorithm: "HS256" },
+      (err, decodedToken) => {
+        if (err) {
+          res.json({ errorMessage: `User is not logged in` });
         } else {
-          if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
-            productsModel.findByIdAndUpdate(
-              req.params.id,
-              { $set: req.body },
-              (error, data) => {
-                res.json(data);
-              }
-            );
-          } else {
+          if (!/^[a-zA-Z]+$/.test(req.body.name)) {
+            res.json({ errorMessage: `name must be a string` });
+          } else if (req.body.price < 0 || req.body.price > 1000) {
             res.json({
-              errorMessage: `User is not an administrator, so they cannot edit records`,
+              errorMessage: `Price needs to be between €0 and €1000`,
             });
+          } else {
+            if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
+              let productDetails = new Object();
+
+              productDetails.name = req.body.name;
+              productDetails.price = req.body.price;
+              productDetails.stock = req.body.stock;
+              productDetails.photos = [];
+
+              req.files.map((file, index) => {
+                productDetails.photos[index] = {
+                  filename: `${file.filename}`,
+                };
+              });
+              productsModel.findByIdAndUpdate(
+                req.params.id,
+                { $set: productDetails },
+                (error, data) => {
+                  res.json(data);
+                }
+              );
+            } else {
+              res.json({
+                errorMessage: `User is not an administrator, so they cannot edit records`,
+              });
+            }
           }
         }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 router.delete(`/products/:id`, (req, res) => {
   jwt.verify(

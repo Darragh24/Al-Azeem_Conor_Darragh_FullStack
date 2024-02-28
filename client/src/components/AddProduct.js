@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
+import "../css/Form.css";
 import LinkInClass from "./LinkInClass";
 import { SERVER_HOST } from "../config/global_constants";
 import { ACCESS_LEVEL_ADMIN } from "../config/global_constants";
-
+import Nav from "./Nav";
 export default class AddProduct extends Component {
   constructor(props) {
     super(props);
@@ -101,60 +102,69 @@ export default class AddProduct extends Component {
     }
 
     return (
-      <div className="form-container">
-        {this.state.redirectToDisplayAllProducts ? (
-          <Redirect to="/AllProducts" />
-        ) : null}
+      <div className="main-container">
+        <Nav />
 
-        {errorMessage}
+        <div className="form-container">
+          <h2 className="product-form-h2">Add Product</h2>
+          {this.state.redirectToDisplayAllProducts ? (
+            <Redirect to="/AllProducts" />
+          ) : null}
+          {errorMessage}
+          <input
+            ref={(input) => {
+              this.inputToFocus = input;
+            }}
+            type="text"
+            name="name"
+            className="product-form-input"
+            value={this.state.name}
+            onChange={this.handleChange}
+            placeholder="Product-Name"
+          />
+          <input
+            type="text"
+            name="price"
+            className="product-form-input"
+            value={this.state.price}
+            onChange={this.handleChange}
+            placeholder="Price"
+          />
+          <input
+            type="text"
+            name="stock"
+            className="product-form-input"
+            value={this.state.stock}
+            onChange={this.handleChange}
+            placeholder="Stock-Quantity"
+          />
+          <div className="photo-upload-container">
+            <input
+              type="file"
+              id="fileInput"
+              className="file-input"
+              multiple
+              onChange={this.handleFileChange}
+              style={{
+                border: "1px solid #ced4da",
+                borderRadius: ".25rem",
+                padding: ".375rem .75rem",
+              }}
+            />
+          </div>
 
-        <label className="form-label">Name</label>
-        <input
-          ref={(input) => {
-            this.inputToFocus = input;
-          }}
-          type="text"
-          name="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
+          <div className="add-cancel-container">
+            <LinkInClass
+              value="Add"
+              className="add-button"
+              onClick={this.handleSubmit}
+            />
 
-        <label className="form-label">Price</label>
-        <input
-          type="text"
-          name="price"
-          value={this.state.price}
-          onChange={this.handleChange}
-        />
-        <label className="form-label">Stock</label>
-        <input
-          type="text"
-          name="stock"
-          value={this.state.stock}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="photos">Photos</label>
-        <input
-          type="file"
-          multiple
-          onChange={this.handleFileChange}
-          style={{
-            border: "1px solid #ced4da",
-            borderRadius: ".25rem",
-            padding: ".375rem .75rem",
-          }}
-        />
-
-        <LinkInClass
-          value="Add"
-          className="green-button"
-          onClick={this.handleSubmit}
-        />
-
-        <Link className="red-button" to={"/AllProducts"}>
-          Cancel
-        </Link>
+            <Link className="cancel-button" to={"/AllProducts"}>
+              Cancel
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

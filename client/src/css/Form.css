@@ -49,11 +49,45 @@
   margin-bottom: 10px;
 }
 
+.product-form-h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .login-input {
   font-size: 13px;
   border-radius: 6px 6px 6px 6px;
   border: 1px solid white;
   width: 50%;
+  height: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
+.register-input {
+  font-size: 13px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid white;
+  width: 50%;
+  height: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.product-form-input {
+  font-size: 13px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid white;
+  width: 50%;
+  height: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.edit-form-input {
+  font-size: 13px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid white;
+  width: 100%;
   height: 30px;
   outline: none;
   margin-bottom: 10px;
@@ -122,12 +156,100 @@
   background-color: #ff0000;
 }
 
-.register-input {
-  font-size: 13px;
-  border-radius: 6px 6px 6px 6px;
-  border: 1px solid white;
+.add-cancel-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.add-button {
+  background-color: #006600;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #500000;
+  width: 140px;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #009900;
+}
+
+.cancel-button:hover {
+  background-color: #ff0000;
+}
+
+.photo-upload-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 50%;
-  height: 30px;
+}
+
+/* Found out how to style a input with type "file" here:  https://www.viget.com/articles/styling-native-file-upload-input-field/ */
+
+.file-input {
+  border: none;
+}
+
+input[type="file"] {
+  border: none;
   outline: none;
-  margin-bottom: 10px;
+  background-color: white;
+}
+
+input::file-selector-button {
+  border: none;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  padding: 0.5em;
+  transition-duration: 0.8s;
+  border-radius: 3px;
+}
+
+input::file-selector-button:hover {
+  border: none;
+  font-weight: bold;
+  background-color: #0056b3;
+  padding: 0.5em;
+  border-radius: 3px;
+  transition-duration: 0.8s;
+}
+
+.file-label {
+  background-color: #007bff;
+  color: #fff;
+  height: 20px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-label:hover {
+  background-color: #0056b3;
+}
+
+.input-label-conatiner {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+}
+.edit-label {
+  color: black;
+  font-size: 15px;
+  width: 40%;
 }
