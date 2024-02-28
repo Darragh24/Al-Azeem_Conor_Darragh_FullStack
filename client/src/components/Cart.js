@@ -149,6 +149,7 @@ export default class Cart extends Component {
       <div className="main-container">
         <Nav />
         <div className="cart-container">
+          <h2 className="cart-h2">Your Cart</h2>
           {this.state.cart.length > 0 && this.state.products ? (
             this.state.cart.map((cartItem, index) => {
               const foundProduct = this.state.products.find(

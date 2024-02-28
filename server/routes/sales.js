@@ -38,7 +38,6 @@ router.post(
   "/sales/:orderID/:productId/:userId/:price/:customerName/:customerEmail",
   createNewSaleDocument
 );
-
 router.get("/sales/:id", getUserSales);
 
 module.exports = router;

@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Register from "./components/Register";
 import Users from "./components/Users";
+import DeleteUser from "./components/DeleteUser";
 import Home from "./components/Home";
 import LoggedInRoute from "./components/LoggedInRoute";
 import PayPalMessage from "./components/PayPalMessage";
@@ -55,6 +56,7 @@ export default class App extends Component {
             component={DeleteProduct}
           />
           <AdminRoute exact path="/Users/" component={Users} />
+          <AdminRoute exact path="/DeleteUser/:id" component={DeleteUser} />
 
           <Route path="*" component={AllProducts} />
         </Switch>

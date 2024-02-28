@@ -1,26 +1,39 @@
 .cart-container {
   margin-top: 200px;
   display: flex;
-  width: 300px;
-  height: 100px;
-  background-color: red;
+  width: 350px;
+  height: auto;
+  background-color: white;
   flex-direction: column;
+  color: black;
+  border: 1px solid black;
+}
+
+.cart-h2 {
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  color: white;
+  padding: 10px;
 }
 
 .cart-item-container {
   display: flex;
   flex-direction: row;
   background-color: grey;
+
   width: 20%;
 }
 
 .cart-product-info-container {
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
 .cart-main-image-0 {
+  border-radius: 15%;
   padding-top: 10px;
   height: 100px !important;
   width: 100px !important;
@@ -31,6 +44,7 @@
 }
 
 .quantity-container {
+  color: black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -58,6 +72,7 @@
 }
 
 .subtotal-container {
+  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -65,9 +80,11 @@
 }
 
 .subtotal-text {
-  color: white;
+  font-size: 20px;
+  color: black;
 }
 
 .subtotal-num {
-  color: white;
+  font-size: 20px;
+  color: red;
 }

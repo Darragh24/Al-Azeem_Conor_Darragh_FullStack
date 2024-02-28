@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const fs = require("fs");
 const multer = require("multer");
+const { get } = require("http");
 var upload = multer({ dest: `${process.env.UPLOADED_FILES_FOLDER}` });
 
 const JWT_PRIVATE_KEY = fs.readFileSync(
@@ -13,13 +14,13 @@ const JWT_PRIVATE_KEY = fs.readFileSync(
   "utf8"
 );
 
-router.get(`/cart`, (req, res) => {
+const getAllCartsItems = (req, res, next) => {
   cartModel.find((error, data) => {
     res.json(data);
   });
-});
+};
 
-router.get(`/cart/:id`, (req, res) => {
+const getUsersCartItems = (req, res, next) => {
   jwt.verify(
     req.headers.authorization,
     JWT_PRIVATE_KEY,
@@ -38,9 +39,9 @@ router.get(`/cart/:id`, (req, res) => {
       }
     }
   );
-});
+};
 
-router.post(`/cart`, upload.array(), (req, res) => {
+const createCartItem = (req, res, next) => {
   jwt.verify(
     req.headers.authorization,
     JWT_PRIVATE_KEY,
@@ -89,9 +90,9 @@ router.post(`/cart`, upload.array(), (req, res) => {
       }
     }
   );
-});
+};
 
-router.put(`/cart/:id`, (req, res) => {
+const increaseCartItemQuantity = (req, res, next) => {
   jwt.verify(
     req.headers.authorization,
     JWT_PRIVATE_KEY,
@@ -145,6 +146,11 @@ router.put(`/cart/:id`, (req, res) => {
       );
     }
   );
-});
+};
+
+router.get(`/cart`, getAllCartsItems);
+router.get(`/cart/:id`, getUsersCartItems);
+router.post(`/cart`, upload.array(), createCartItem);
+router.put(`/cart/:id`, increaseCartItemQuantity);
 
 module.exports = router;
