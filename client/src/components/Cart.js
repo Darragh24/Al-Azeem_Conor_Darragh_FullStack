@@ -67,22 +67,17 @@ export default class Cart extends Component {
             headers: { authorization: localStorage.token },
           })
           .then((res) => {
-            if (res.data) {
-              if (res.data.errorMessage) {
-                console.log(res.data.errorMessage);
-              } else {
-                const productExists = this.state.products.some(
-                  (product) => product._id === res.data._id
-                );
-                if (!productExists) {
-                  this.setState((prevState) => ({
-                    products: [...prevState.products, res.data],
-                  }));
-                }
-              }
-            } else {
-              console.log("Record not found");
+            const productExists = this.state.products.some(
+              (product) => product._id === res.data._id
+            );
+            if (!productExists) {
+              this.setState((prevState) => ({
+                products: [...prevState.products, res.data],
+              }));
             }
+          })
+          .catch((err) => {
+            //
           });
         this.getProductInfo();
         return this.setState({ subTotal: subTotal });
@@ -95,18 +90,11 @@ export default class Cart extends Component {
           return axios
             .get(`${SERVER_HOST}/products/photo/${photo.filename}`)
             .then((res) => {
-              if (res.data) {
-                if (res.data.errorMessage) {
-                  console.log(res.data.errorMessage);
-                } else {
-                  document.getElementById(
-                    photo._id
-                  ).src = `data:;base64,${res.data.image}`;
-                }
-              } else {
-                console.log("Record not found");
-              }
-            });
+              document.getElementById(
+                photo._id
+              ).src = `data:;base64,${res.data.image}`;
+            })
+            .catch((err) => {});
         });
       });
     }
@@ -124,36 +112,28 @@ export default class Cart extends Component {
         headers: { authorization: localStorage.token },
       })
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } else if (res.data.deleteMessage) {
-            this.setState({ cart: res.data.cart });
-            let subTotal = 0;
-
-            this.state.cart.forEach((cartItem) => {
-              subTotal += cartItem.quantity * cartItem.productPrice;
-            });
-
-            this.setState({ subTotal: subTotal });
-          } else {
-            const updatedCart = [...this.state.cart];
-            updatedCart[index] = res.data;
-            this.setState({ cart: updatedCart });
-            let subTotal = 0;
-            let updatedProducts;
-            this.state.cart.forEach((cartItem) => {
-              subTotal += cartItem.quantity * cartItem.productPrice;
-              updatedProducts = this.state.products.filter(
-                (product) => product._id !== cartItem.productId
-              );
-            });
-            this.setState({ products: updatedProducts });
-            this.setState({ subTotal: subTotal });
-            console.log(`Cart updated`);
-          }
+        if (res.data.deleteMessage) {
+          this.setState({ cart: res.data.cart });
+          let subTotal = 0;
+          this.state.cart.forEach((cartItem) => {
+            subTotal += cartItem.quantity * cartItem.productPrice;
+          });
+          this.setState({ subTotal: subTotal });
         } else {
-          console.log(`Cart not updated`);
+          const updatedCart = [...this.state.cart];
+          updatedCart[index] = res.data;
+          this.setState({ cart: updatedCart });
+          let subTotal = 0;
+          let updatedProducts;
+          this.state.cart.forEach((cartItem) => {
+            subTotal += cartItem.quantity * cartItem.productPrice;
+            updatedProducts = this.state.products.filter(
+              (product) => product._id !== cartItem.productId
+            );
+          });
+          this.setState({ products: updatedProducts });
+          this.setState({ subTotal: subTotal });
+          console.log(`Cart updated`);
         }
       });
 
