@@ -101,17 +101,9 @@ export default class ProductPage extends Component {
         },
       })
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } else {
-            console.log(res.data);
-            console.log("Added to cart");
-          }
-        } else {
-          console.log("Not added to cart");
-        }
-      });
+        console.log("Added to cart");
+      })
+      .catch((err) => {});
   };
 
   render() {

@@ -9,22 +9,63 @@ export default class Users extends Component {
 
     this.state = {
       users: [],
+      originalUsers: [],
     };
   }
 
   componentDidMount() {
-    axios.get(`${SERVER_HOST}/users`).then((res) => {
-      if (res.data) {
-        if (res.data.errorMessage) {
-          console.log(res.data.errorMessage);
-        } else {
-          this.setState({ users: res.data });
-        }
-      } else {
-        console.log("Record not found");
-      }
-    });
+    axios
+      .get(`${SERVER_HOST}/users`)
+      .then((res) => {
+        this.setState({ users: res.data, originalUsers: res.data });
+      })
+      .catch((err) => {});
   }
+
+  handleSearchChange = (e) => {
+    const originalUsers = this.state.originalUsers;
+
+    const selectedUsers = originalUsers.filter((user) => {
+      return user.name.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+
+    this.setState({ users: selectedUsers });
+  };
+  handleSortChange = (e) => {
+    let selectedUsers;
+
+    if (e.target.value === "alphabet-asc") {
+      selectedUsers = [...this.state.originalUsers].sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    } else if (e.target.value === "alphabet-dsc") {
+      selectedUsers = [...this.state.originalUsers].sort((a, b) => {
+        return b.name.localeCompare(a.name);
+      });
+    } else {
+      return this.setState({ users: this.state.originalUsers });
+    }
+
+    this.setState({ users: selectedUsers });
+  };
+
+  handleFilterChange = (e) => {
+    let filteredUsers;
+
+    if (e.target.value === "2") {
+      filteredUsers = this.state.originalUsers.filter(
+        (user) => user.accessLevel === 2
+      );
+    } else if (e.target.value === "1") {
+      filteredUsers = this.state.originalUsers.filter(
+        (user) => user.accessLevel === 1
+      );
+    } else {
+      return this.setState({ users: this.state.originalUsers });
+    }
+
+    this.setState({ users: filteredUsers });
+  };
 
   render() {
     return (
@@ -45,16 +86,16 @@ export default class Users extends Component {
             <select
               name="price"
               className="dropdown1"
-              onChange={this.handleStockChange}
+              onChange={this.handleFilterChange}
             >
               <option key="all" value="all">
                 All
               </option>
-              <option key="available" value="available">
-                In Stock
+              <option key="admin" value={2}>
+                Admin
               </option>
-              <option key="unavailable" value="unavailable">
-                Out of Stock
+              <option key="normal-user" value={1}>
+                Normal User
               </option>
             </select>
           </div>
@@ -73,12 +114,6 @@ export default class Users extends Component {
               </option>
               <option key="alphabet-dsc" value="alphabet-dsc">
                 Alphabetically, Z-A
-              </option>
-              <option key="price-asc" value="price-asc">
-                Price, low to high
-              </option>
-              <option key="price-dsc" value="price-dsc">
-                Price , high to low
               </option>
             </select>
           </div>

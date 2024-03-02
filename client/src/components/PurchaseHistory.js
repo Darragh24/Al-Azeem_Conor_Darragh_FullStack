@@ -8,6 +8,7 @@ export default class PurchaseHistory extends Component {
 
     this.state = {
       sales: [],
+      originalSales: [],
     };
   }
 
@@ -15,18 +16,53 @@ export default class PurchaseHistory extends Component {
     axios
       .get(`${SERVER_HOST}/sales/${this.props.match.params.id}`)
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } else {
-            this.setState({ sales: res.data });
-            console.log("Sales", this.state.sales);
-          }
-        } else {
-          console.log("Record not found");
-        }
-      });
+        this.setState({ sales: res.data, originalSales: res.data });
+      })
+      .catch((err) => {});
   }
+
+  handleSearchChange = (e) => {
+    const search = e.target.value.toLowerCase();
+    const originalSales = this.state.originalSales;
+
+    const selectedSales = originalSales.filter((sale) =>
+      sale.productInfos.some((product) =>
+        product.productName.toLowerCase().includes(search)
+      )
+    );
+    this.setState({ sales: selectedSales });
+  };
+
+  handleSortChange = (e) => {
+    const sales = this.state.sales;
+    let selectedSales;
+
+    if (e.target.value === "price-asc") {
+      selectedSales = sales.slice().sort((a, b) => {
+        return a.price - b.price;
+      });
+    } else if (e.target.value === "price-dsc") {
+      selectedSales = sales.slice().sort((a, b) => {
+        return b.price - a.price;
+      });
+    } else {
+      return this.setState({ sales: this.state.originalSales });
+    }
+
+    this.setState({ sales: selectedSales });
+  };
+
+  handleFilterChange = (e) => {
+    let filteredSales;
+    if (e.target.value === "oldest") {
+      filteredSales = [...this.state.originalSales];
+      filteredSales.reverse();
+    } else {
+      filteredSales = [...this.state.originalSales];
+    }
+
+    this.setState({ sales: filteredSales });
+  };
 
   render() {
     return (
@@ -36,7 +72,7 @@ export default class PurchaseHistory extends Component {
           <div className="search-box-container">
             <input
               className="search-box"
-              placeholder="Search by name"
+              placeholder="Search by Product-Name"
               value={this.state.search}
               onChange={this.handleSearchChange}
             />
@@ -46,16 +82,16 @@ export default class PurchaseHistory extends Component {
             <select
               name="price"
               className="dropdown1"
-              onChange={this.handleStockChange}
+              onChange={this.handleFilterChange}
             >
               <option key="all" value="all">
                 All
               </option>
-              <option key="available" value="available">
-                In Stock
+              <option key="newest" value="newest">
+                Purchase Date: Newest to Oldest
               </option>
-              <option key="unavailable" value="unavailable">
-                Out of Stock
+              <option key="oldest" value="oldest">
+                Purchase Date: Oldest to Newest
               </option>
             </select>
           </div>
@@ -69,17 +105,11 @@ export default class PurchaseHistory extends Component {
               <option key="default" value="default">
                 Default
               </option>
-              <option key="alphabet-asc" value="alphabet-asc">
-                Alphabetically, A-Z
-              </option>
-              <option key="alphabet-dsc" value="alphabet-dsc">
-                Alphabetically, Z-A
-              </option>
               <option key="price-asc" value="price-asc">
-                Price, low to high
+                Subtotal, low to high
               </option>
               <option key="price-dsc" value="price-dsc">
-                Price , high to low
+                Subtotal , high to low
               </option>
             </select>
           </div>
@@ -89,6 +119,7 @@ export default class PurchaseHistory extends Component {
           <div className="sales-table-container">
             <tbody className="sales-table">
               <tr>
+                <th>PayPal PaymentId</th>
                 <th>Product Id</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
@@ -98,6 +129,7 @@ export default class PurchaseHistory extends Component {
 
               {sale.productInfos.map((productInfo) => (
                 <tr>
+                  <td>----</td>
                   <td>{productInfo.productId}</td>
                   <td>{productInfo.productName}</td>
                   <td>{productInfo.quantity}</td>
@@ -106,6 +138,7 @@ export default class PurchaseHistory extends Component {
                 </tr>
               ))}
               <tr>
+                <td>{sale.paypalPaymentID}</td>
                 <td>----</td>
                 <td>----</td>
                 <td>----</td>

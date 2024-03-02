@@ -32,11 +32,10 @@ export default class AllProducts extends Component {
   }
 
   handleSearchChange = (e) => {
-    const search = e.target.value.toLowerCase();
     const originalProducts = this.state.originalProducts;
 
     const selectedProducts = originalProducts.filter((product) =>
-      product.name.toLowerCase().includes(search)
+      product.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
 
     this.setState({ products: selectedProducts });
