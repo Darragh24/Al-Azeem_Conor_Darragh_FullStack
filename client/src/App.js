@@ -16,6 +16,7 @@ import Home from "./components/Home";
 import LoggedInRoute from "./components/LoggedInRoute";
 import PayPalMessage from "./components/PayPalMessage";
 import AdminRoute from "./components/AdminRoute";
+import PurchaseHistory from "./components/PurchaseHistory";
 import SalesHistory from "./components/SalesHistory";
 import "./css/Main.css";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
@@ -46,7 +47,12 @@ export default class App extends Component {
             path="/PayPalMessage/:messageType/:payPalPaymentID"
             component={PayPalMessage}
           />
-          <Route exact path="/SalesHistory/:id" component={SalesHistory} />
+          <LoggedInRoute
+            exact
+            path="/PurchaseHistory/:id"
+            component={PurchaseHistory}
+          />
+          <AdminRoute exact path="/SalesHistory/:id" component={SalesHistory} />
           <LoggedInRoute exact path="/Logout" component={Logout} />
           <AdminRoute exact path="/AddProduct" component={AddProduct} />
           <AdminRoute exact path="/EditProduct/:id" component={EditProduct} />

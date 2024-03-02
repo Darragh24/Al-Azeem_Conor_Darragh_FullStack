@@ -1,19 +1,29 @@
 const router = require(`express`).Router();
 const salesModel = require(`../models/sales`);
-//const productsModel = require(`../models/products`);
+const multer = require("multer");
+const upload = multer();
+const productsModel = require(`../models/products`);
 const createNewSaleDocument = (req, res, next) => {
   let saleDetails = new Object();
   saleDetails.paypalPaymentID = req.params.orderID;
-  saleDetails.productId = req.params.productId;
+  saleDetails.productInfos = JSON.parse(req.body.productInfos); //Explain JSON.Stringify in BuyProduct Line 56
   saleDetails.userId = req.params.userId;
   saleDetails.price = req.params.price;
   saleDetails.customerName = req.params.customerName;
   saleDetails.customerEmail = req.params.customerEmail;
 
-  /* productsModel.updateOne(
-    { id: req.params.productId },
-    { $dec: { quantity: req.body.quantity } }
-  );*/
+  for (let i = 0; i < saleDetails.productInfos.length; i++) {
+    const productInfo = saleDetails.productInfos[i];
+    productsModel.updateOne(
+      { _id: productInfo.productId },
+      { $inc: { stock: -productInfo.quantity } },
+      (error) => {
+        if (i === saleDetails.productInfos.length - 1) {
+          console.log("All stock levels updated successfully");
+        }
+      }
+    );
+  }
 
   salesModel.create(saleDetails, (err, data) => {
     if (err) {
@@ -35,7 +45,8 @@ const getUserSales = (req, res, next) => {
 };
 
 router.post(
-  "/sales/:orderID/:productId/:userId/:price/:customerName/:customerEmail",
+  "/sales/:orderID/:userId/:price/:customerName/:customerEmail",
+  upload.none(),
   createNewSaleDocument
 );
 router.get("/sales/:id", getUserSales);

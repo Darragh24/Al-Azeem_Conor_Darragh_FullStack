@@ -37,6 +37,26 @@ export default class Cart extends Component {
       });
   }
 
+  getProductInfo() {
+    let productInfos = [];
+
+    this.state.cart.forEach((cartItem) => {
+      const foundProduct = this.state.products.find(
+        (product) => product._id === cartItem.productId
+      );
+
+      if (foundProduct) {
+        productInfos.push({
+          productId: cartItem.productId,
+          productName: foundProduct.name,
+          quantity: cartItem.quantity,
+          productPrice: cartItem.productPrice,
+        });
+      }
+    });
+    return productInfos;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.cart !== prevState.cart) {
       let subTotal = 0;
@@ -64,7 +84,7 @@ export default class Cart extends Component {
               console.log("Record not found");
             }
           });
-
+        this.getProductInfo();
         return this.setState({ subTotal: subTotal });
       });
     }
@@ -225,7 +245,7 @@ export default class Cart extends Component {
               <div className="paypal-button">
                 <BuyProduct
                   price={this.state.subTotal}
-                  productId={this.state.products}
+                  productInfos={this.getProductInfo()}
                   quantity={this.state.quantity}
                 />
               </div>

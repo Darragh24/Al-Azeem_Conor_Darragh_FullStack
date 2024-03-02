@@ -55,16 +55,10 @@ export default class AddProduct extends Component {
         },
       })
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } else {
-            console.log("Record added");
-            this.setState({ redirectToDisplayAllProducts: true });
-          }
-        } else {
-          console.log("Record not added");
-        }
+        this.setState({ redirectToDisplayAllProducts: true });
+      })
+      .catch((err) => {
+        this.setState({ wasSubmittedAtLeastOnce: true });
       });
   };
 

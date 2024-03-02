@@ -14,15 +14,57 @@ const JWT_PRIVATE_KEY = fs.readFileSync(
   "utf8"
 );
 
+const verifyUsersJWTPassword = (req, res, next) => {
+  jwt.verify(
+    req.headers.authorization,
+    JWT_PRIVATE_KEY,
+    { algorithm: "HS256" },
+    (err, decodedToken) => {
+      if (err) {
+        return next(err);
+      }
+
+      req.decodedToken = decodedToken;
+      return next();
+    }
+  );
+};
+
+const checkThatUserIsAnAdministrator = (req, res, next) => {
+  if (req.decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
+    return next();
+  } else {
+    return next(createError(401));
+  }
+};
+
+const verifyProduct = (req, res, next) => {
+  if (!/^[a-zA-Z]+$/.test(req.body.name)) {
+    return next(createError(400, `The product name is invalid`));
+  } else if (req.body.price < 0 || req.body.price > 1000) {
+    return next(
+      createError(
+        400,
+        `The price of the product needs to be greater than 0 and less than 1000`
+      )
+    );
+  } else {
+    return next();
+  }
+};
+
 const getPhotos = (req, res, next) => {
   fs.readFile(
     `${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`,
     "base64",
     (err, fileData) => {
+      if (err) {
+        return next(err);
+      }
       if (fileData) {
-        res.json({ image: fileData });
+        return res.json({ image: fileData });
       } else {
-        res.json({ image: null });
+        return res.json({ image: null });
       }
     }
   );
@@ -35,144 +77,72 @@ const getAllProducts = (req, res, next) => {
 };
 
 const getOneProduct = (req, res, next) => {
-  productsModel.findById(req.params.id, (error, data) => {
-    if (error) {
-      res.json(error);
-    } else if (!data) {
-      res.json({ errorMessage: "Product not found" });
-    } else {
-      res.json(data);
+  productsModel.findById(req.params.id, (err, data) => {
+    if (err) {
+      return next(err);
     }
+    return res.json(data);
   });
 };
 
 const addProduct = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
+  let productDetails = new Object();
+
+  productDetails.name = req.body.name;
+  productDetails.price = req.body.price;
+  productDetails.stock = req.body.stock;
+  productDetails.photos = [];
+
+  req.files.map((file, index) => {
+    productDetails.photos[index] = { filename: `${file.filename}` };
+  });
+
+  productsModel.create(productDetails, (err, data) => {
+    {
       if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        if (!/^[a-zA-Z]+$/.test(req.body.name)) {
-          res.json({ errorMessage: `name must be a string` });
-        } else if (req.body.price < 0 || req.body.price > 1000) {
-          res.json({
-            errorMessage: `Price needs to be between €0 and €1000`,
-          });
-        } else if (req.body.stock < 0 || req.body.stock > 1000) {
-          res.json({
-            errorMessage: `Stock needs to be between 0 and 1000`,
-          });
-        } else {
-          if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
-            let productDetails = new Object();
-
-            productDetails.name = req.body.name;
-            productDetails.price = req.body.price;
-            productDetails.stock = req.body.stock;
-            productDetails.photos = [];
-
-            req.files.map((file, index) => {
-              productDetails.photos[index] = { filename: `${file.filename}` };
-            });
-
-            productsModel.create(productDetails, (error, data) => {
-              if (error) {
-                res.json({
-                  errorMessage: "Error occurred while adding the product",
-                });
-              } else {
-                res.json(data);
-              }
-            });
-          } else {
-            res.json({
-              errorMessage: `User is not an administrator, so they cannot add new records`,
-            });
-          }
-        }
+        return next(err);
       }
+
+      return res.json(data);
     }
-  );
+  });
 };
 
 const editProduct = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
+  let productDetails = new Object();
+
+  productDetails.name = req.body.name;
+  productDetails.price = req.body.price;
+  productDetails.stock = req.body.stock;
+  productDetails.photos = [];
+
+  req.files.map((file, index) => {
+    productDetails.photos[index] = {
+      filename: `${file.filename}`,
+    };
+  });
+
+  productsModel.findByIdAndUpdate(
+    req.params.id,
+    { $set: productDetails },
+    (err, data) => {
       if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        if (!/^[a-zA-Z]+$/.test(req.body.name)) {
-          res.json({ errorMessage: `name must be a string` });
-        } else if (req.body.price < 0 || req.body.price > 1000) {
-          res.json({
-            errorMessage: `Price needs to be between €0 and €1000`,
-          });
-        } else {
-          if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
-            let productDetails = new Object();
-
-            productDetails.name = req.body.name;
-            productDetails.price = req.body.price;
-            productDetails.stock = req.body.stock;
-            productDetails.photos = [];
-
-            req.files.map((file, index) => {
-              productDetails.photos[index] = {
-                filename: `${file.filename}`,
-              };
-            });
-
-            productsModel.findByIdAndUpdate(
-              req.params.id,
-              { $set: productDetails },
-              (error, data) => {
-                if (error) {
-                  res.json({
-                    errorMessage: "Error occurred while editing the product",
-                  });
-                } else {
-                  res.json(data);
-                }
-              }
-            );
-          } else {
-            res.json({
-              errorMessage: `User is not an administrator, so they cannot edit records`,
-            });
-          }
-        }
+        return next(err);
       }
+
+      return res.json(data);
     }
   );
 };
 
 const deleteProduct = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
-      if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
-          productsModel.findByIdAndRemove(req.params.id, (error, data) => {
-            res.json(data);
-          });
-        } else {
-          res.json({
-            errorMessage: `User is not an administrator, so they cannot delete records`,
-          });
-        }
-      }
+  productsModel.findByIdAndRemove(req.params.id, (err, data) => {
+    if (err) {
+      return next(err);
     }
-  );
+
+    return res.json(data);
+  });
 };
 
 router.get(`/products/photo/:filename`, getPhotos);
@@ -184,6 +154,9 @@ router.post(
     "productPhotos",
     parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)
   ),
+  verifyUsersJWTPassword,
+  checkThatUserIsAnAdministrator,
+  verifyProduct,
   addProduct
 );
 
@@ -193,9 +166,17 @@ router.put(
     "productPhotos",
     parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)
   ),
+  verifyUsersJWTPassword,
+  checkThatUserIsAnAdministrator,
+  verifyProduct,
   editProduct
 );
 
-router.delete(`/products/:id`, deleteProduct);
+router.delete(
+  `/products/:id`,
+  verifyUsersJWTPassword,
+  checkThatUserIsAnAdministrator,
+  deleteProduct
+);
 
 module.exports = router;

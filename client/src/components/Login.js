@@ -26,28 +26,34 @@ export default class Login extends Component {
         `${SERVER_HOST}/users/login/${this.state.email}/${this.state.password}`
       )
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } // user successfully logged in
-          else {
-            console.log("User logged in");
-            console.log(res.data);
-            localStorage._id = res.data._id;
-            localStorage.name = res.data.name;
-            localStorage.accessLevel = res.data.accessLevel;
-            localStorage.profilePhoto = res.data.profilePhoto;
-            localStorage.token = res.data.token;
+        localStorage._id = res.data._id;
+        localStorage.name = res.data.name;
+        localStorage.accessLevel = res.data.accessLevel;
+        localStorage.profilePhoto = res.data.profilePhoto;
+        localStorage.token = res.data.token;
 
-            this.setState({ isLoggedIn: true });
-          }
-        } else {
-          console.log("Login failed");
-        }
+        this.setState({ isLoggedIn: true });
+      })
+      .catch((err) => {
+        console.log("err.response.status", err.response.status);
+        console.log("err.response.statusText", err.response.statusText);
+        console.log("err.response.data", err.response.data);
+
+        this.setState({ wasSubmittedAtLeastOnce: true });
       });
   };
 
   render() {
+    let errorMessage = "";
+    if (this.state.wasSubmittedAtLeastOnce) {
+      errorMessage = (
+        <div className="error">
+          Login Details are incorrect
+          <br />
+        </div>
+      );
+    }
+
     return (
       <div className="main-container">
         <Nav />
@@ -55,13 +61,14 @@ export default class Login extends Component {
           <h2 className="login-h2">Login</h2>
 
           <h4 className="login-h4">
-            don't have an account?
+            Don't have an account?
             <Link className="create-account-button" to={"/Register"}>
               Create One
             </Link>
           </h4>
           {this.state.isLoggedIn ? <Redirect to="/AllProducts" /> : null}
 
+          {errorMessage}
           <input
             className="login-input"
             type="email"

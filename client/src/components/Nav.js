@@ -4,6 +4,7 @@ import Logout from "./Logout";
 import {
   ACCESS_LEVEL_GUEST,
   ACCESS_LEVEL_ADMIN,
+  ACCESS_LEVEL_NORMAL_USER,
 } from "../config/global_constants";
 
 import "../css/Nav.css";
@@ -24,12 +25,18 @@ export default class Nav extends Component {
           <Link className="button" to={"/AllProducts"}>
             Shop
           </Link>
-          <Link className="button" to={"/AllProducts"}>
-            About
-          </Link>
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
             <Link className="button" to={"/Users"}>
               Users
+            </Link>
+          ) : null}
+
+          {localStorage.accessLevel <= ACCESS_LEVEL_NORMAL_USER ? (
+            <Link
+              className="button"
+              to={`/PurchaseHistory/${localStorage._id}`}
+            >
+              Purchase History
             </Link>
           ) : null}
         </div>
@@ -51,7 +58,7 @@ export default class Nav extends Component {
         ) : (
           <div className="login-container">
             <Link className="login-button" to={"/Login"}>
-              <i class="fa fa-user"></i>
+              <i className="fa fa-user"></i>
             </Link>
             <Link className="button" to={`/Cart/${localStorage._id}`}>
               <i className="fa fa-shopping-cart" />

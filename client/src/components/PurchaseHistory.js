@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Nav from "./Nav";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
-export default class SalesHistory extends Component {
+export default class PurchaseHistory extends Component {
   constructor(props) {
     super(props);
 
@@ -32,7 +32,6 @@ export default class SalesHistory extends Component {
     return (
       <div className="main-container">
         <Nav />
-
         <div className="tool-buttons-container">
           <div className="search-box-container">
             <input
@@ -85,12 +84,11 @@ export default class SalesHistory extends Component {
             </select>
           </div>
         </div>
+
         {this.state.sales.map((sale) => (
           <div className="sales-table-container">
             <tbody className="sales-table">
               <tr>
-                <th>Name</th>
-                <th>Email</th>
                 <th>Product Id</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
@@ -100,8 +98,6 @@ export default class SalesHistory extends Component {
 
               {sale.productInfos.map((productInfo) => (
                 <tr>
-                  <td>----</td>
-                  <td>----</td>
                   <td>{productInfo.productId}</td>
                   <td>{productInfo.productName}</td>
                   <td>{productInfo.quantity}</td>
@@ -110,8 +106,6 @@ export default class SalesHistory extends Component {
                 </tr>
               ))}
               <tr>
-                <td>{sale.customerName}</td>
-                <td>{sale.customerEmail}</td>
                 <td>----</td>
                 <td>----</td>
                 <td>----</td>

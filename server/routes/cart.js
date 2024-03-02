@@ -14,6 +14,22 @@ const JWT_PRIVATE_KEY = fs.readFileSync(
   "utf8"
 );
 
+const verifyUsersJWTPassword = (req, res, next) => {
+  jwt.verify(
+    req.headers.authorization,
+    JWT_PRIVATE_KEY,
+    { algorithm: "HS256" },
+    (err, decodedToken) => {
+      if (err) {
+        return next(err);
+      }
+
+      req.decodedToken = decodedToken;
+      return next();
+    }
+  );
+};
+
 const getAllCartsItems = (req, res, next) => {
   cartModel.find((error, data) => {
     res.json(data);
@@ -21,136 +37,131 @@ const getAllCartsItems = (req, res, next) => {
 };
 
 const getUsersCartItems = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
-      if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        cartModel.find({ userId: req.params.id }, (error, data) => {
-          if (error) {
-            res.status(500).json({ errorMessage: "Internal Server Error" });
-          } else {
-            res.json(data);
-          }
-        });
-      }
+  cartModel.find({ userId: req.params.id }, (error, data) => {
+    if (error) {
+      res.status(500).json({ errorMessage: "Internal Server Error" });
+    } else {
+      res.json(data);
     }
-  );
+  });
+};
+
+const checkIfCartItemExists = (req, res, next) => {
+  cartModel.findOne({ productId: req.body.productId }, (error, data) => {
+    if (error) {
+      res.status(500).json({ errorMessage: "Internal Server Error" });
+    } else {
+      req.data = data;
+      return next();
+    }
+  });
 };
 
 const createCartItem = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
-      if (err) {
+  if (req.data) {
+    req.data.quantity += 1;
+    cartModel.updateOne(
+      { _id: req.data._id },
+      { quantity: req.data.quantity },
+      (updateError) => {
+        if (updateError) {
+          res.json({
+            errorMessage: `Failed to update cart item quantity`,
+          });
+        } else {
+          res.json(req.data);
+        }
+      }
+    );
+  } else {
+    let cartDetails = {
+      productId: req.body.productId,
+      userId: req.body.userId,
+      quantity: req.body.quantity,
+      productPrice: req.body.productPrice,
+    };
+    cartModel.create(cartDetails, (createError, createdCartItem) => {
+      if (createError) {
         res.json({ errorMessage: `Failed to add to cart` });
       } else {
-        cartModel.findOne(
-          { productId: req.body.productId },
-          (error, existingCartItem) => {
-            if (error) {
-              res.json({ errorMessage: `Failed to add to cart` });
-            } else if (existingCartItem) {
-              existingCartItem.quantity += 1;
-              cartModel.updateOne(
-                { _id: existingCartItem._id },
-                { quantity: existingCartItem.quantity },
-                (updateError) => {
-                  if (updateError) {
-                    res.json({
-                      errorMessage: `Failed to update cart item quantity`,
-                    });
-                  } else {
-                    res.json(existingCartItem);
-                  }
-                }
-              );
-            } else {
-              let cartDetails = {
-                productId: req.body.productId,
-                userId: req.body.userId,
-                quantity: req.body.quantity,
-                productPrice: req.body.productPrice,
-              };
-              cartModel.create(cartDetails, (createError, createdCartItem) => {
-                if (createError) {
-                  res.json({ errorMessage: `Failed to add to cart` });
-                } else {
-                  res.json(createdCartItem);
-                }
-              });
-            }
-          }
-        );
+        res.json(createdCartItem);
       }
-    }
-  );
+    });
+  }
 };
 
 const increaseCartItemQuantity = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
+  cartModel.findOneAndUpdate(
+    { userId: req.body.userId, productId: req.body.productId },
+    { $inc: { quantity: req.body.quantity } },
+    { returnOriginal: false },
+    (err, data) => {
       if (err) {
-        res.json({ errorMessage: `User is not logged in` });
+        return next(err);
       }
-      cartModel.findOneAndUpdate(
-        { userId: req.body.userId, productId: req.body.productId },
-        { $inc: { quantity: req.body.quantity } },
-        { returnOriginal: false },
-        (error, data) => {
-          if (error) {
-            res.json({
-              errorMessage: `An error ocurred while updating quantity`,
-            });
-          } else if (data.quantity <= 0) {
-            // If quantity is zero or less, delete the item
-            cartModel.deleteOne(
-              { userId: req.body.userId, productId: req.body.productId },
-              (deleteError) => {
-                if (deleteError) {
-                  res.json({
-                    errorMessage: `An error ocurred while deleting cart item`,
-                  });
-                } else {
-                  // Cart item successfully deleted, now fetch the remaining cart items
-                  cartModel.find(
-                    { userId: req.body.userId },
-                    (findError, cartItems) => {
-                      if (findError) {
-                        res.json({
-                          errorMessage: `An error occurred while fetching cart items`,
-                        });
-                      }
-                      res.json({
-                        cart: cartItems,
-                        deleteMessage: "Item deleted successfully",
-                        productId: req.body.productId,
-                      });
-                    }
-                  );
-                }
-              }
-            );
-          } else {
-            res.json(data);
-          }
-        }
-      );
+      req.data = data;
+      return next();
     }
   );
 };
 
+const deleteIfQuantityIsZero = (req, res, next) => {
+  if (req.data.quantity <= 0) {
+    cartModel.deleteOne(
+      { userId: req.body.userId, productId: req.body.productId },
+      (deleteError) => {
+        if (deleteError) {
+          res.json({
+            errorMessage: `An error ocurred while deleting cart item`,
+          });
+        } else {
+          cartModel.find(
+            { userId: req.body.userId },
+            (findError, cartItems) => {
+              if (findError) {
+                res.json({
+                  errorMessage: `An error occurred while fetching cart items`,
+                });
+              }
+              res.json({
+                cart: cartItems,
+                deleteMessage: "Item deleted successfully",
+                productId: req.body.productId,
+              });
+            }
+          );
+        }
+      }
+    );
+  } else {
+    res.json(req.data);
+  }
+};
+
+const emptyUserCart = (req, res, next) => {
+  cartModel.deleteMany({ userId: req.params.id }, (err) => {
+    if (err) {
+      return next(err);
+    }
+    res.json({ message: "User cart emptied successfully" });
+  });
+};
+
 router.get(`/cart`, getAllCartsItems);
-router.get(`/cart/:id`, getUsersCartItems);
-router.post(`/cart`, upload.array(), createCartItem);
-router.put(`/cart/:id`, increaseCartItemQuantity);
+router.get(`/cart/:id`, verifyUsersJWTPassword, getUsersCartItems);
+router.post(
+  `/cart`,
+  upload.array(),
+  verifyUsersJWTPassword,
+  checkIfCartItemExists,
+  createCartItem
+);
+router.put(
+  `/cart/:id`,
+  verifyUsersJWTPassword,
+  increaseCartItemQuantity,
+  deleteIfQuantityIsZero
+);
+router.delete(`/cart/:id`, emptyUserCart);
 
 module.exports = router;

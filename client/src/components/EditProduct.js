@@ -14,7 +14,7 @@ export default class EditProduct extends Component {
     this.state = {
       name: ``,
       price: ``,
-      stock: "",
+      stock: ``,
       photos: "",
       selectedFiles: null,
       redirectToDisplayAllProducts: false,
@@ -29,20 +29,15 @@ export default class EditProduct extends Component {
         headers: { authorization: localStorage.token },
       })
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } else {
-            this.setState({
-              name: res.data.name,
-              price: res.data.price,
-              stock: res.data.stock,
-              photos: res.data.photos,
-            });
-          }
-        } else {
-          console.log(`Record not found`);
-        }
+        this.setState({
+          name: res.data.name,
+          price: res.data.price,
+          stock: res.data.stock,
+          photos: res.data.photos,
+        });
+      })
+      .catch((err) => {
+        // do nothing
       });
   }
 
@@ -83,16 +78,10 @@ export default class EditProduct extends Component {
           }
         )
         .then((res) => {
-          if (res.data) {
-            if (res.data.errorMessage) {
-              console.log(res.data.errorMessage);
-            } else {
-              console.log(`Record updated`);
-              this.setState({ redirectToDisplayAllProducts: true });
-            }
-          } else {
-            console.log(`Record not updated`);
-          }
+          this.setState({ redirectToDisplayAllProducts: true });
+        })
+        .catch((err) => {
+          this.setState({ wasSubmittedAtLeastOnce: true });
         });
     }
   };
@@ -109,7 +98,7 @@ export default class EditProduct extends Component {
 
   validateStock() {
     const stock = parseInt(this.state.stock);
-    return stock >= 1 && stock <= 1000;
+    return stock <= 1000;
   }
 
   validate() {

@@ -41,28 +41,31 @@ export default class Register extends Component {
         { headers: { "Content-type": "multipart/form-data" } }
       )
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } // user successfully registered
-          else {
-            console.log("User registered and logged in");
+        console.log("User registered and logged in");
 
-            localStorage._id = res.data._id;
-            localStorage.name = res.data.name;
-            localStorage.accessLevel = res.data.accessLevel;
-            localStorage.profilePhoto = res.data.profilePhoto;
-            localStorage.token = res.data.token;
+        localStorage._id = res.data._id;
+        localStorage.name = res.data.name;
+        localStorage.accessLevel = res.data.accessLevel;
+        localStorage.profilePhoto = res.data.profilePhoto;
+        localStorage.token = res.data.token;
 
-            this.setState({ isRegistered: true });
-          }
-        } else {
-          console.log("Registration failed");
-        }
+        this.setState({ isRegistered: true });
+      })
+      .catch((err) => {
+        this.setState({ wasSubmittedAtLeastOnce: true });
       });
   };
 
   render() {
+    let errorMessage = "";
+    if (this.state.wasSubmittedAtLeastOnce) {
+      errorMessage = (
+        <div className="error">
+          Error: All fields must be filled in
+          <br />
+        </div>
+      );
+    }
     return (
       <div className="main-container">
         <Nav />
@@ -73,6 +76,7 @@ export default class Register extends Component {
           onSubmit={this.handleSubmit}
         >
           {this.state.isRegistered ? <Redirect to="/AllProducts" /> : null}
+          {errorMessage}
 
           <h2 className="register-h2">Create an account</h2>
           <h4 className="login-h4">

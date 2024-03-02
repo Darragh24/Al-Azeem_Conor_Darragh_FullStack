@@ -42,9 +42,24 @@ export default class BuyProduct extends Component {
   };
 
   onApprove = (paymentData) => {
+    let salesData = new FormData();
+
+    if (this.props.productInfos) {
+      const productInfosArray = [];
+      this.props.productInfos.forEach((info) => {
+        productInfosArray.push({
+          productId: info.productId,
+          productName: info.productName,
+          quantity: info.quantity,
+          productPrice: info.productPrice,
+        });
+      });
+      salesData.append("productInfos", JSON.stringify(productInfosArray)); //Explain this
+    }
     axios
       .post(
-        `${SERVER_HOST}/sales/${paymentData.orderID}/${this.props.productId}/${localStorage._id}/${this.props.price}/${this.state.user.name}/${this.state.user.email}`,
+        `${SERVER_HOST}/sales/${paymentData.orderID}/${localStorage._id}/${this.props.price}/${this.state.user.name}/${this.state.user.email}`,
+        salesData,
         {
           headers: {
             authorization: localStorage.token,
@@ -65,6 +80,15 @@ export default class BuyProduct extends Component {
           redirectToPayPalMessage: true,
         });
       });
+
+    axios
+      .delete(`${SERVER_HOST}/cart/${localStorage._id}`, {
+        headers: { authorization: localStorage.token },
+      })
+      .then((res) => {
+        console.log("Cart emptied");
+      })
+      .catch((err) => {});
   };
 
   onError = (errorData) => {

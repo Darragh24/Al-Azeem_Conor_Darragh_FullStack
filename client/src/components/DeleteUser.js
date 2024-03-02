@@ -19,18 +19,9 @@ export default class DeleteProduct extends Component {
         headers: { authorization: localStorage.token },
       })
       .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } // success
-          else {
-            console.log("User deleted");
-          }
-          this.setState({ redirectToDisplayAllUsers: true });
-        } else {
-          console.log("User not deleted");
-        }
-      });
+        this.setState({ redirectToDisplayAllUsers: true });
+      })
+      .catch((err) => {});
   }
 
   render() {
