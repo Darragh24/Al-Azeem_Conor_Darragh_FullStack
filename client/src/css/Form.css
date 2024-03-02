@@ -139,7 +139,7 @@
 
 .form-register-cancel-button {
   background-color: #500000;
-  width: 140px;
+  width: auto;
   color: white;
   border-radius: 5px;
   padding: 5px;
@@ -252,4 +252,30 @@ input::file-selector-button:hover {
   color: black;
   font-size: 15px;
   width: 40%;
+}
+
+@media only screen and (max-width: 499px) {
+  .form-container {
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    align-items: center;
+    margin: 200px;
+    width: 80%;
+    background-color: #d9dddc;
+  }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 999px) {
+  .form-container {
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    align-items: center;
+    margin: 200px;
+    width: 60%;
+    background-color: #d9dddc;
+  }
 }

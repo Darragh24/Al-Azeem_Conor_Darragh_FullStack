@@ -31,7 +31,7 @@ export default class Nav extends Component {
             </Link>
           ) : null}
 
-          {localStorage.accessLevel <= ACCESS_LEVEL_NORMAL_USER ? (
+          {localStorage.accessLevel == ACCESS_LEVEL_NORMAL_USER ? (
             <Link
               className="button"
               to={`/PurchaseHistory/${localStorage._id}`}

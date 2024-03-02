@@ -144,11 +144,12 @@ export default class AllProducts extends Component {
               </option>
             </select>
           </div>
-
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-            <Link className="blue-button" to={"/AddProduct"}>
-              Add New Product
-            </Link>
+            <div className="add-product-container">
+              <Link className="blue-button" to={"/AddProduct"}>
+                Add New Product
+              </Link>
+            </div>
           ) : null}
         </div>
         <div className="collection-container">

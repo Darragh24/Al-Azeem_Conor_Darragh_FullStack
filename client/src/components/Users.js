@@ -118,39 +118,40 @@ export default class Users extends Component {
             </select>
           </div>
         </div>
-        <tbody className="user-table">
-          <tr className="row-header">
-            <th>Name</th>
-            <th>Email</th>
-            <th>Access Level</th>
-            <th>Sale History</th>
-            <th>Actions</th>
-          </tr>
-          {this.state.users.map((user, index) => (
-            <tr className={`row-${index}`}>
-              <td className={`data-${index}`}>{user.name}</td>
-              <td className={`data-${index}`}>{user.email}</td>
-              <td className={`data-${index}`}>{user.accessLevel}</td>
-
-              <td className={`data-${index}`}>
-                <Link
-                  className="history-button"
-                  to={"/SalesHistory/" + user._id}
-                >
-                  View History
-                </Link>
-              </td>
-              <td className={`data-${index}`}>
-                <Link className="history-button" to={"/DeleteUser/" + user._id}>
-                  Edit
-                </Link>
-                <Link className="history-button" to={"/DeleteUser/" + user._id}>
-                  Delete
-                </Link>
-              </td>
+        <div className="table-container">
+          <tbody className="user-table">
+            <tr className="row-header">
+              <th>Name</th>
+              <th>Email</th>
+              <th>Access Level</th>
+              <th>Sale History</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
+            {this.state.users.map((user, index) => (
+              <tr className={`row-${index}`}>
+                <td data-cell="name">{user.name}</td>
+                <td data-cell="email">{user.email}</td>
+                <td data-cell="accessLevel">{user.accessLevel}</td>
+
+                <td data-cell="salesHistory">
+                  <Link
+                    className="history-button"
+                    to={"/SalesHistory/" + user._id}
+                  >
+                    View History
+                  </Link>
+                </td>
+                <td data-cell="actions">
+                  <div className="actions-container">
+                    <Link className="del-button" to={"/DeleteUser/" + user._id}>
+                      Delete
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </div>
       </div>
     );
   }

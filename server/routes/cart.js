@@ -47,14 +47,17 @@ const getUsersCartItems = (req, res, next) => {
 };
 
 const checkIfCartItemExists = (req, res, next) => {
-  cartModel.findOne({ productId: req.body.productId }, (error, data) => {
-    if (error) {
-      res.status(500).json({ errorMessage: "Internal Server Error" });
-    } else {
-      req.data = data;
-      return next();
+  cartModel.findOne(
+    { userId: req.body.userId, productId: req.body.productId },
+    (error, data) => {
+      if (error) {
+        res.status(500).json({ errorMessage: "Internal Server Error" });
+      } else {
+        req.data = data;
+        return next();
+      }
     }
-  });
+  );
 };
 
 const createCartItem = (req, res, next) => {

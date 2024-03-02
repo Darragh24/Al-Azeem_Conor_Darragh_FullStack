@@ -133,7 +133,7 @@ export default class Register extends Component {
           <input type="file" onChange={this.handleFileChange} />
           <div className="register-confirmation-buttons-container">
             <LinkInClass
-              value="Register New User"
+              value="Register"
               className="form-register-button"
               onClick={this.handleSubmit}
             />

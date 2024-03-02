@@ -129,21 +129,23 @@ export default class PurchaseHistory extends Component {
 
               {sale.productInfos.map((productInfo) => (
                 <tr>
-                  <td>----</td>
-                  <td>{productInfo.productId}</td>
-                  <td>{productInfo.productName}</td>
-                  <td>{productInfo.quantity}</td>
-                  <td>${productInfo.productPrice * productInfo.quantity}</td>
-                  <td>----</td>
+                  <td data-cell="paypal-paymentId">----</td>
+                  <td data-cell="productId">{productInfo.productId}</td>
+                  <td data-cell="product-name">{productInfo.productName}</td>
+                  <td data-cell="quantity">{productInfo.quantity}</td>
+                  <td data-cell="product-price">
+                    ${productInfo.productPrice * productInfo.quantity}
+                  </td>
+                  <td data-cell="subtotal">----</td>
                 </tr>
               ))}
               <tr>
-                <td>{sale.paypalPaymentID}</td>
-                <td>----</td>
-                <td>----</td>
-                <td>----</td>
-                <td>----</td>
-                <td>${sale.price}</td>
+                <td data-cell="paypal-paymentId">{sale.paypalPaymentID}</td>
+                <td data-cell="productId">----</td>
+                <td data-cell="product-name">----</td>
+                <td data-cell="quantity">----</td>
+                <td data-cell="product-price">----</td>
+                <td data-cell="subtotal">${sale.price}</td>
               </tr>
             </tbody>
           </div>

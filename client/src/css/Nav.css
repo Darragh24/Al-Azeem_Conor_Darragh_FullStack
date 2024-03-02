@@ -99,3 +99,68 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 499px) {
+  .nav-container {
+    margin: 0px;
+    padding: 0px;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 60px;
+    width: 100%;
+  }
+
+  .brand-name-p {
+    padding-top: 10px;
+    color: white;
+    padding-left: 14px;
+    font-size: 10px;
+  }
+
+  .brand-button {
+    color: white;
+    padding-left: 14px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  .link-container {
+    padding-top: 15px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+  }
+
+  .login-container {
+    padding-top: 15px;
+    font-size: 20px;
+    background-color: red;
+    padding-right: 20px;
+  }
+
+  .profile-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  .logout-container {
+    padding-top: 15px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+  }
+  .logout-button {
+    color: white;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 999px) {
+}
