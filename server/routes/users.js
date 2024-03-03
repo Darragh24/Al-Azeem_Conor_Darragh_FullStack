@@ -110,20 +110,12 @@ const getAllUsers = (req, res, next) => {
 };
 
 const getOneUser = (req, res, next) => {
-  jwt.verify(
-    req.headers.authorization,
-    JWT_PRIVATE_KEY,
-    { algorithm: "HS256" },
-    (err, decodedToken) => {
-      if (err) {
-        res.json({ errorMessage: `User is not logged in` });
-      } else {
-        usersModel.findById(req.params.id, (error, data) => {
-          res.json(data);
-        });
-      }
+  usersModel.findById(req.params.id, (err, data) => {
+    if (err) {
+      return next(err);
     }
-  );
+    return res.json(data);
+  });
 };
 
 const emptyUsersCollection = (req, res, next) => {

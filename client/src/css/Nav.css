@@ -66,6 +66,20 @@
   color: white;
 }
 
+.nav-atc-button {
+  background-color: red;
+  padding-left: 10px;
+  padding-right: 30px;
+  text-decoration: none;
+  color: white;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.nav-atc-button:hover {
+  text-decoration: underline;
+  color: lightgrey;
+}
 .login-button {
   background-color: red;
   padding-right: 10px;
@@ -82,25 +96,53 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+.right-side-nav-container {
+  display: flex;
+  padding-right: 20px;
+  background-color: red;
+  padding-top: 8px;
+  font-size: 22px;
+  flex-direction: row;
+  z-index: 999;
+}
 
 .profile-pic {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 15px;
+  opacity: 1;
+}
+
+.profile-pic:hover + .logout-container,
+.logout-container:hover {
+  display: flex;
+  align-items: flex-start;
 }
 
 .logout-container {
-  padding-top: 8px;
-  font-size: 22px;
-  display: flex;
-  flex-direction: row;
+  background-color: red;
+  width: 10%;
+  padding-top: 5px;
+  font-size: 16px;
+  flex-direction: column;
+  z-index: 999;
+  position: absolute;
+  top: 47px;
+  right: 0;
+  display: none;
 }
+
 .logout-button {
   color: white;
-  padding-right: 10px;
+  cursor: pointer;
+}
+
+.logout-text {
+  color: white;
   display: flex;
   flex-direction: row;
-  cursor: pointer;
+  align-items: center;
+  padding-left: 10px;
 }
 
 .logout-button:hover {
@@ -169,7 +211,176 @@
     flex-direction: row;
     cursor: pointer;
   }
+
+  .right-side-nav-container {
+    padding-right: 20px;
+    background-color: red;
+    padding-top: 8px;
+    font-size: 22px;
+    flex-direction: column;
+    z-index: 999;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    opacity: 1;
+    position: relative;
+  }
+
+  .profile-pic:hover + .logout-container,
+  .logout-container:hover {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .logout-container {
+    background-color: red;
+    width: 10%;
+    padding-top: 5px;
+    font-size: 16px;
+    flex-direction: column;
+    z-index: 999;
+    position: absolute;
+    top: 47px;
+    right: 0;
+    display: none;
+  }
+
+  .logout-button {
+    color: white;
+    cursor: pointer;
+  }
+
+  .logout-text {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .logout-button:hover {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 @media only screen and (min-width: 500px) and (max-width: 999px) {
+  .nav-container {
+    margin: 0px;
+    padding: 0px;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 60px;
+    width: 100%;
+  }
+
+  .brand-name-p {
+    padding-top: 10px;
+    color: white;
+    padding-left: 14px;
+    font-size: 10px;
+  }
+
+  .brand-button {
+    color: white;
+    padding-left: 14px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  .link-container {
+    padding-top: 15px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+  }
+
+  .login-container {
+    padding-top: 15px;
+    font-size: 20px;
+    background-color: red;
+    padding-right: 20px;
+  }
+
+  .profile-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+
+  .logout-container {
+    padding-top: 15px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+  }
+  .logout-button {
+    color: white;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+  }
+
+  .right-side-nav-container {
+    padding-right: 20px;
+    background-color: red;
+    padding-top: 8px;
+    font-size: 22px;
+    flex-direction: column;
+    z-index: 999;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    opacity: 1;
+    position: relative;
+  }
+
+  .profile-pic:hover + .logout-container,
+  .logout-container:hover {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .logout-container {
+    background-color: red;
+    width: 10%;
+    padding-top: 5px;
+    font-size: 20px;
+    flex-direction: column;
+    z-index: 999;
+    position: absolute;
+    top: 47px;
+    right: 0;
+    display: none;
+  }
+
+  .logout-button {
+    color: white;
+    cursor: pointer;
+  }
+
+  .logout-text {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .logout-button:hover {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }

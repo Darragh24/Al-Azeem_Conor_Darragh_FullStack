@@ -33,12 +33,14 @@ export default class Logout extends Component {
     return (
       <div>
         {!this.state.isLoggedIn ? <Redirect to="/AllProducts" /> : null}
-
-        <LinkInClass
-          value="Log out"
-          className="logout-button"
-          onClick={this.handleSubmit}
-        />
+        <div className="logout-text">
+          <i className="fa  fa-sign-out" />
+          <LinkInClass
+            value="Log out"
+            className="logout-button"
+            onClick={this.handleSubmit}
+          />
+        </div>
       </div>
     );
   }

@@ -41,7 +41,11 @@ export default class Nav extends Component {
           ) : null}
         </div>
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
-          <div className="logout-container">
+          <div className="right-side-nav-container">
+            <Link className="nav-atc-button" to={`/Cart/${localStorage._id}`}>
+              <i className="fa fa-shopping-cart" />
+            </Link>
+
             {localStorage.profilePhoto !== "null" ? (
               <img
                 className="profile-pic"
@@ -56,17 +60,21 @@ export default class Nav extends Component {
                 alt=""
               />
             )}
-            <Logout />
-            <Link className="button" to={`/Cart/${localStorage._id}`}>
-              <i className="fa fa-shopping-cart" />
-            </Link>
+
+            <div className="logout-container">
+              <Logout />
+              <Link className="button" to={`/Account/${localStorage._id}`}>
+                <i className="fa fa-user" />
+                View Account
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="login-container">
             <Link className="login-button" to={"/Login"}>
               <i className="fa fa-user"></i>
             </Link>
-            <Link className="button" to={`/Cart/${localStorage._id}`}>
+            <Link className="nav-atc-button" to={`/Cart/${localStorage._id}`}>
               <i className="fa fa-shopping-cart" />
             </Link>
           </div>

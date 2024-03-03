@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   ACCESS_LEVEL_ADMIN,
+  ACCESS_LEVEL_GUEST,
   ACCESS_LEVEL_NORMAL_USER,
   SERVER_HOST,
 } from "../config/global_constants";
@@ -103,26 +104,20 @@ export default class ProductBox extends Component {
             </div>
           )}
 
-          {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER && (
-            <div className="box-button-container">
-              <Link
-                className="edit-button"
-                to={"/EditProduct/" + this.props.product._id}
-              >
-                <i className="fa fa-pencil" />
-              </Link>
-              <Link
-                className="del-button"
-                to={"/DeleteProduct/" + this.props.product._id}
-              >
-                <i className="fa fa-trash-o" />
-              </Link>
-              <button className="atc-button" onClick={this.handleATC}>
-                <p>
-                  +<i className="fa fa-shopping-cart" />
-                </p>
-              </button>
-            </div>
+          {localStorage.accessLevel == ACCESS_LEVEL_NORMAL_USER && (
+            <button className="atc-button" onClick={this.handleATC}>
+              <p>
+                +<i className="fa fa-shopping-cart" />
+              </p>
+            </button>
+          )}
+
+          {localStorage.accessLevel == ACCESS_LEVEL_GUEST && (
+            <Link className="atc-button" to={"/Register"}>
+              <p>
+                +<i className="fa fa-shopping-cart" />
+              </p>
+            </Link>
           )}
         </div>
       </div>

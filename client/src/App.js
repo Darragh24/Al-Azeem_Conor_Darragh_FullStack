@@ -7,6 +7,7 @@ import ResetDatabase from "./components/ResetDatabase";
 import DeleteProduct from "./components/DeleteProduct";
 import Cart from "./components/Cart";
 import ProductPage from "./components/ProductPage";
+import Account from "./components/Account";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Register from "./components/Register";
@@ -52,6 +53,7 @@ export default class App extends Component {
             path="/PurchaseHistory/:id"
             component={PurchaseHistory}
           />
+          <LoggedInRoute exact path="/Account/:id" component={Account} />
           <AdminRoute exact path="/SalesHistory/:id" component={SalesHistory} />
           <LoggedInRoute exact path="/Logout" component={Logout} />
           <AdminRoute exact path="/AddProduct" component={AddProduct} />
