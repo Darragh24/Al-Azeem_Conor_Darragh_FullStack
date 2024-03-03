@@ -66,6 +66,7 @@
     object-fit: cover; /* Scales the image as large as possible while preserving its aspect ratio */
     display: flex;
     justify-content: space-evenly;
+    transition: 0.4s;
   }
 }
 

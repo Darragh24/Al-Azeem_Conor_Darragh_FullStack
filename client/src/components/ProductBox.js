@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from "../config/global_constants";
+import {
+  ACCESS_LEVEL_ADMIN,
+  ACCESS_LEVEL_NORMAL_USER,
+  SERVER_HOST,
+} from "../config/global_constants";
 
 import "../css/ProductBox.css";
 export default class ProductBox extends Component {
@@ -77,7 +81,7 @@ export default class ProductBox extends Component {
             </Link>
             <p>€{this.props.product.price}</p>
           </div>
-          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
             <div className="box-button-container">
               <Link
                 className="edit-button"
@@ -97,12 +101,28 @@ export default class ProductBox extends Component {
                 </p>
               </button>
             </div>
-          ) : (
-            <button className="atc-button" onClick={this.handleATC}>
-              <p>
-                +<i className="fa fa-shopping-cart" />
-              </p>
-            </button>
+          )}
+
+          {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER && (
+            <div className="box-button-container">
+              <Link
+                className="edit-button"
+                to={"/EditProduct/" + this.props.product._id}
+              >
+                <i className="fa fa-pencil" />
+              </Link>
+              <Link
+                className="del-button"
+                to={"/DeleteProduct/" + this.props.product._id}
+              >
+                <i className="fa fa-trash-o" />
+              </Link>
+              <button className="atc-button" onClick={this.handleATC}>
+                <p>
+                  +<i className="fa fa-shopping-cart" />
+                </p>
+              </button>
+            </div>
           )}
         </div>
       </div>
