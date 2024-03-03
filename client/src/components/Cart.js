@@ -3,6 +3,7 @@ import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
 import "../css/Cart.css";
 import Nav from "./Nav";
+import Marquee from "./Marquee";
 import BuyProduct from "./BuyProduct";
 
 export default class Cart extends Component {
@@ -148,6 +149,7 @@ export default class Cart extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
         <div className="cart-container">
           <h2 className="cart-h2">Your Cart</h2>
           {this.state.cart.length > 0 && this.state.products ? (

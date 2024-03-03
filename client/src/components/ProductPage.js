@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
 import Nav from "./Nav";
+import Marquee from "./Marquee";
 import Footer from "./Footer";
 import "../css/ProductPage.css";
 import BuyProduct from "./BuyProduct";
@@ -98,6 +99,7 @@ export default class ProductPage extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
 
         <div className="content-container">
           <div className="left-container">

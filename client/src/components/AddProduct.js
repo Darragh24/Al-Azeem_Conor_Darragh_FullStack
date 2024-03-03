@@ -6,6 +6,7 @@ import LinkInClass from "./LinkInClass";
 import { SERVER_HOST } from "../config/global_constants";
 import { ACCESS_LEVEL_ADMIN } from "../config/global_constants";
 import Nav from "./Nav";
+import Marquee from "./Marquee";
 export default class AddProduct extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +99,7 @@ export default class AddProduct extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
 
         <div className="form-container">
           <h2 className="product-form-h2">Add Product</h2>

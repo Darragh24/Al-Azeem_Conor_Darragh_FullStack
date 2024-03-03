@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nav from "./Nav";
+import Marquee from "./Marquee";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { SERVER_HOST } from "../config/global_constants";
@@ -71,6 +72,7 @@ export default class Users extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
 
         <div className="tool-buttons-container">
           <div className="search-box-container">

@@ -3,6 +3,7 @@ import ProductBox from "./ProductBox";
 import Nav from "./Nav";
 import axios from "axios";
 import Footer from "./Footer";
+import Marquee from "./Marquee";
 import { SERVER_HOST } from "../config/global_constants";
 import { Link } from "react-router-dom";
 import { ACCESS_LEVEL_ADMIN } from "../config/global_constants";
@@ -90,6 +91,7 @@ export default class AllProducts extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
         <div className="heading-container">
           <h1 className="heading-h1">Products</h1>
         </div>

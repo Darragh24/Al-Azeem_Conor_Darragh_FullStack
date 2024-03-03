@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import Nav from "./Nav";
+import Marquee from "./Marquee";
 import LinkInClass from "../components/LinkInClass";
 import { SERVER_HOST } from "../config/global_constants";
 import "../css/Form.css";
@@ -57,6 +58,7 @@ export default class Login extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
         <form className="form-container" noValidate={true}>
           <h2 className="login-h2">Login</h2>
 

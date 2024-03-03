@@ -4,6 +4,7 @@ import axios from "axios";
 import "../css/Form.css";
 import LinkInClass from "./LinkInClass";
 import Nav from "./Nav";
+import Marquee from "./Marquee";
 
 import { SERVER_HOST } from "../config/global_constants";
 
@@ -122,6 +123,7 @@ export default class EditProduct extends Component {
     return (
       <div className="main-container">
         <Nav />
+        <Marquee />
         <div className="form-container">
           <h2 className="product-form-h2">Edit Product</h2>
           {this.state.redirectToDisplayAllProducts ? (
