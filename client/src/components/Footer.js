@@ -45,10 +45,10 @@ export default class Nav extends Component {
             </Link>
           </div>
           <div className="brand-container">
-            <h2>BrandName</h2>
+            <h2>T-Shirts4All</h2>
 
             <p className="mission">We sell the best t-shirts in the world</p>
-            <p className="our-email">info@brandName.com </p>
+            <p className="our-email">info@tshirts4all.com </p>
             <p className="our-number">Call Us: (012) 345-6789</p>
           </div>
         </div>

@@ -1,0 +1,95 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.home-h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+.home-img {
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.image-container {
+  min-height: 100%;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  background-color: red;
+}
+
+.image-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  width: 300px;
+  background-color: red;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  margin: 0px;
+  position: absolute;
+  text-decoration: none;
+  top: 70%;
+  left: 42%;
+  transition-duration: 0.4s;
+}
+
+.image-button:hover {
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  color: red;
+  position: absolute;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 499px) {
+  .home-h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+  }
+
+  .home-img {
+    border: 0;
+    width: auto;
+    height: 400px;
+    vertical-align: top;
+  }
+
+  .image-button {
+    width: 200px;
+    top: 65%;
+    left: 20%;
+    object-fit: contain;
+  }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 999px) {
+  .home-img {
+    border: 0;
+    width: auto;
+    height: 600px;
+    vertical-align: top;
+  }
+  .image-button {
+    top: 70%;
+    left: 31%;
+  }
+}

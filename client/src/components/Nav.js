@@ -15,7 +15,7 @@ export default class Nav extends Component {
       <div className="nav-container">
         <p className="brand-name-p">
           <Link className="brand-button" to={"/Home"}>
-            Brand
+            T4A
           </Link>
         </p>
         <div className="link-container">
