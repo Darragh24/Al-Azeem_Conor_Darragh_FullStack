@@ -17,6 +17,13 @@ app.use(require(`./routes/users`));
 app.use(require(`./routes/cart`));
 app.use(require(`./routes/sales`));
 
+const path = require("path");
+const appPath = path.join(__dirname, "..", "client", "build");
+app.use(express.static(appPath));
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(appPath, "index.html"));
+});
+
 // Port
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Connected to port ` + process.env.SERVER_PORT);
