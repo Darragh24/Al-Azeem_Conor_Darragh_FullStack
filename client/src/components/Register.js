@@ -78,16 +78,14 @@ export default class Register extends Component {
           onSubmit={this.handleSubmit}
         >
           {this.state.isRegistered ? <Redirect to="/AllProducts" /> : null}
-          {errorMessage}
-
           <h2 className="register-h2">Create an account</h2>
           <h4 className="login-h4">
             Already have an account?
             <Link className="create-account-button" to={"/Login"}>
               Sign in
             </Link>
-          </h4>
-
+          </h4>{" "}
+          {errorMessage}
           <input
             className="register-input"
             name="name"
@@ -100,7 +98,6 @@ export default class Register extends Component {
               this.inputToFocus = input;
             }}
           />
-
           <input
             className="register-input"
             name="email"
@@ -110,7 +107,6 @@ export default class Register extends Component {
             value={this.state.email}
             onChange={this.handleChange}
           />
-
           <input
             className="register-input"
             name="password"
@@ -121,7 +117,6 @@ export default class Register extends Component {
             value={this.state.password}
             onChange={this.handleChange}
           />
-
           <input
             className="register-input"
             name="confirmPassword"
@@ -131,7 +126,6 @@ export default class Register extends Component {
             value={this.state.confirmPassword}
             onChange={this.handleChange}
           />
-
           <input type="file" onChange={this.handleFileChange} />
           <div className="register-confirmation-buttons-container">
             <LinkInClass

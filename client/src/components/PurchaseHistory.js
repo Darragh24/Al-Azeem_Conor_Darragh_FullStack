@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nav from "./Nav";
+import Footer from "./Footer";
 import Marquee from "./Marquee";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
@@ -117,41 +118,33 @@ export default class PurchaseHistory extends Component {
           </div>
         </div>
 
-        {this.state.sales.map((sale) => (
+        {this.state.sales.map((sale, index) => (
           <div className="sales-table-container">
             <tbody className="sales-table">
+              <h1>Order #{index + 1}</h1>
+              <h3>Paypal Payment ID : {sale.paypalPaymentID}</h3>
+              <h3>Subtotal : ${sale.price}</h3>
+
               <tr>
-                <th>PayPal PaymentId</th>
                 <th>Product Id</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Product Price</th>
-                <th>Subtotal</th>
               </tr>
-
               {sale.productInfos.map((productInfo) => (
                 <tr>
-                  <td data-cell="paypal-paymentId">----</td>
                   <td data-cell="productId">{productInfo.productId}</td>
                   <td data-cell="product-name">{productInfo.productName}</td>
                   <td data-cell="quantity">{productInfo.quantity}</td>
                   <td data-cell="product-price">
                     ${productInfo.productPrice * productInfo.quantity}
                   </td>
-                  <td data-cell="subtotal">----</td>
                 </tr>
               ))}
-              <tr>
-                <td data-cell="paypal-paymentId">{sale.paypalPaymentID}</td>
-                <td data-cell="productId">----</td>
-                <td data-cell="product-name">----</td>
-                <td data-cell="quantity">----</td>
-                <td data-cell="product-price">----</td>
-                <td data-cell="subtotal">${sale.price}</td>
-              </tr>
             </tbody>
           </div>
         ))}
+        <Footer />
       </div>
     );
   }

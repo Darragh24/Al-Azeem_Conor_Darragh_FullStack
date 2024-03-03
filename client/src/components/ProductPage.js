@@ -117,10 +117,24 @@ export default class ProductPage extends Component {
           <div className="right-container">
             <div className="title-container">
               <h1>{this.state.product.name}</h1>
-              <h3>${this.state.product.price}</h3>
+              <div price-discount-conatiner>
+                <div className="rating-container">
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                  <i className="fa fa-star" />
+                </div>
+
+                <h3 className="discount-h3">
+                  ${(this.state.product.price / (1 - 0.2)).toFixed(2)}
+                </h3>
+
+                <h3 className="price-h3">${this.state.product.price}</h3>
+              </div>
             </div>
             <div className="description-container">
-              <p>This is the product description</p>
+              <p>This is a very high quality t-shirt and you should buy it</p>
 
               <h3>Quantity</h3>
               <input

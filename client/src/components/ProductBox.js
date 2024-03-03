@@ -78,9 +78,19 @@ export default class ProductBox extends Component {
         <div className="info-button-container">
           <div className="box-info-container">
             <Link to={"/ProductPage/" + this.props.product._id}>
-              <p className="product-name-p">{this.props.product.name}</p>
+              <h3 className="product-name-p">{this.props.product.name}</h3>
             </Link>
-            <p>€{this.props.product.price}</p>
+            <div className="rating-container">
+              <i className="fa fa-star" />
+              <i className="fa fa-star" />
+              <i className="fa fa-star" />
+              <i className="fa fa-star" />
+              <i className="fa fa-star" />
+            </div>
+            <h4 className="discount-h3">
+              ${(this.props.product.price / (1 - 0.2)).toFixed(2)}
+            </h4>
+            <h3 className="price-h3">€{this.props.product.price}</h3>
           </div>
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
             <div className="box-button-container">
@@ -96,29 +106,41 @@ export default class ProductBox extends Component {
               >
                 <i className="fa fa-trash-o" />
               </Link>
-              <button className="atc-button" onClick={this.handleATC}>
+              {this.props.product.stock > 0 ? (
                 <p>
-                  +<i className="fa fa-shopping-cart" />
+                  <button className="atc-button" onClick={this.handleATC}>
+                    <p>
+                      +<i className="fa fa-shopping-cart" />
+                    </p>
+                  </button>
                 </p>
-              </button>
+              ) : (
+                <p className="out-of-stock-p">Out of Stock</p>
+              )}
             </div>
           )}
-
-          {localStorage.accessLevel == ACCESS_LEVEL_NORMAL_USER && (
-            <button className="atc-button" onClick={this.handleATC}>
+          {localStorage.accessLevel == ACCESS_LEVEL_NORMAL_USER &&
+            (this.props.product.stock > 0 ? (
               <p>
-                +<i className="fa fa-shopping-cart" />
+                <button className="atc-button" onClick={this.handleATC}>
+                  <p>
+                    +<i className="fa fa-shopping-cart" />
+                  </p>
+                </button>
               </p>
-            </button>
-          )}
-
-          {localStorage.accessLevel == ACCESS_LEVEL_GUEST && (
-            <Link className="atc-button" to={"/Register"}>
+            ) : (
+              <p className="out-of-stock-p">Out of Stock</p>
+            ))}
+          {localStorage.accessLevel == ACCESS_LEVEL_GUEST &&
+            (this.props.product.stock > 0 ? (
               <p>
-                +<i className="fa fa-shopping-cart" />
+                <Link className="link-atc-button" to={"/Register"}>
+                  +<i className="fa fa-shopping-cart" />
+                </Link>
               </p>
-            </Link>
-          )}
+            ) : (
+              <p className="out-of-stock-p">Out of Stock</p>
+            ))}
         </div>
       </div>
     );

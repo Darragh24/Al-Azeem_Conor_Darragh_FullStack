@@ -10,7 +10,7 @@ export default class Home extends Component {
         <Nav />
         <Marquee />
         <div className="home-container">
-          <h1>Welcome to BrandName</h1>
+          <h1>WELCOME TO BRAND</h1>
         </div>
         <Footer />
       </div>

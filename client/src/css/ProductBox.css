@@ -77,6 +77,31 @@ a:hover {
   border-color: white;
   padding: 5px;
   cursor: pointer;
+  width: 100%;
+}
+
+.link-atc-button {
+  color: white;
+  margin: 0px;
+  margin-top: 3px;
+  height: 40px;
+  background-color: black;
+  text-decoration: none;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: white;
+  padding: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+.link-atc-button:hover {
+  background-color: black;
+  text-decoration: none;
+}
+
+.rating-container {
+  font-size: 20px;
+  color: red;
 }
 
 .image-0 {
@@ -87,4 +112,11 @@ a:hover {
 
 .image-1 {
   display: none;
+}
+
+.out-of-stock-p {
+  border-radius: 10px;
+  padding: 8px;
+  background-color: black;
+  color: white;
 }

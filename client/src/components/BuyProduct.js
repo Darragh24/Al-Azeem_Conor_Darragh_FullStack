@@ -54,7 +54,7 @@ export default class BuyProduct extends Component {
           productPrice: info.productPrice,
         });
       });
-      salesData.append("productInfos", JSON.stringify(productInfosArray)); //Explain this
+      salesData.append("productInfos", JSON.stringify(productInfosArray)); //Found this at JSON.stringify https://stackoverflow.com/questions/53735223/js-how-to-append-array-in-formdata
     }
     axios
       .post(

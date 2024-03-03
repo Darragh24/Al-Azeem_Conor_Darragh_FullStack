@@ -47,7 +47,7 @@ export default class ResetDatabase extends Component {
           value="Reset User Database"
           className="red-button"
           onClick={this.resetUsersModel}
-        />{" "}
+        />
         <br />
         <br />
         <p>

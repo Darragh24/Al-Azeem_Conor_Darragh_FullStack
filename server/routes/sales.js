@@ -6,7 +6,7 @@ const productsModel = require(`../models/products`);
 const createNewSaleDocument = (req, res, next) => {
   let saleDetails = new Object();
   saleDetails.paypalPaymentID = req.params.orderID;
-  saleDetails.productInfos = JSON.parse(req.body.productInfos); //Explain JSON.Stringify in BuyProduct Line 56
+  saleDetails.productInfos = JSON.parse(req.body.productInfos);
   saleDetails.userId = req.params.userId;
   saleDetails.price = req.params.price;
   saleDetails.customerName = req.params.customerName;

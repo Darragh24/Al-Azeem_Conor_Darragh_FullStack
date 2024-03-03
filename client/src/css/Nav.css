@@ -184,6 +184,15 @@
     justify-content: space-between;
     text-decoration: none;
   }
+  .nav-atc-button {
+    background-color: red;
+    padding-left: 0px;
+    padding-right: 10px;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
 
   .login-container {
     padding-top: 15px;
@@ -193,7 +202,7 @@
   }
 
   .profile-pic {
-    width: 30px;
+    width: 15px;
     height: 30px;
     border-radius: 10px;
   }
@@ -217,7 +226,7 @@
     background-color: red;
     padding-top: 8px;
     font-size: 22px;
-    flex-direction: column;
+    flex-direction: row;
     z-index: 999;
   }
 
@@ -237,7 +246,7 @@
 
   .logout-container {
     background-color: red;
-    width: 10%;
+    width: 20%;
     padding-top: 5px;
     font-size: 16px;
     flex-direction: column;
@@ -301,6 +310,15 @@
     justify-content: space-between;
     text-decoration: none;
   }
+  .nav-atc-button {
+    background-color: red;
+    padding-left: 0px;
+    padding-right: 10px;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
 
   .login-container {
     padding-top: 15px;
@@ -310,7 +328,7 @@
   }
 
   .profile-pic {
-    width: 30px;
+    width: 15px;
     height: 30px;
     border-radius: 10px;
   }
@@ -334,7 +352,7 @@
     background-color: red;
     padding-top: 8px;
     font-size: 22px;
-    flex-direction: column;
+    flex-direction: row;
     z-index: 999;
   }
 
@@ -354,9 +372,9 @@
 
   .logout-container {
     background-color: red;
-    width: 10%;
+    width: 20%;
     padding-top: 5px;
-    font-size: 20px;
+    font-size: 16px;
     flex-direction: column;
     z-index: 999;
     position: absolute;

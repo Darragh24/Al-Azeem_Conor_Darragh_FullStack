@@ -117,41 +117,30 @@ export default class SalesHistory extends Component {
             </select>
           </div>
         </div>
-        {this.state.sales.map((sale) => (
+        {this.state.sales.map((sale, index) => (
           <div className="sales-table-container">
             <tbody className="sales-table">
+              <h1>Order #{index + 1}</h1>
+              <h3>User : {sale.customerName}</h3>
+              <h3>Email : {sale.customerEmail}</h3>
+              <h3>Amount Paid: ${sale.price}</h3>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
                 <th>Product Id</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Product Price</th>
-                <th>Subtotal</th>
               </tr>
 
               {sale.productInfos.map((productInfo) => (
                 <tr>
-                  <td data-cell="name">----</td>
-                  <td data-cell="email">----</td>
                   <td data-cell="product-id">{productInfo.productId}</td>
                   <td data-cell="product-name">{productInfo.productName}</td>
                   <td data-cell="quantity">{productInfo.quantity}</td>
                   <td data-cell="product-price">
                     ${productInfo.productPrice * productInfo.quantity}
                   </td>
-                  <td data-cell="subtotal">----</td>
                 </tr>
               ))}
-              <tr>
-                <td data-cell="name">{sale.customerName}</td>
-                <td data-cell="email">{sale.customerEmail}</td>
-                <td data-cell="product-id">----</td>
-                <td data-cell="product-name">----</td>
-                <td data-cell="quantity">----</td>
-                <td data-cell="product-price">----</td>
-                <td data-cell="subtotal">${sale.price}</td>
-              </tr>
             </tbody>
           </div>
         ))}
