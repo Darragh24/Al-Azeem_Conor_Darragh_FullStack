@@ -19,18 +19,6 @@ export default class ProductPage extends Component {
     };
   }
 
-  handleClick = (e) => {
-    e.target.classList.toggle("active");
-
-    var content = e.target.nextElementSibling;
-
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  };
-
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -142,40 +130,6 @@ export default class ProductPage extends Component {
                 onChange={this.handleChange}
                 value={this.state.quantity}
               />
-
-              <button className="collapsible" onClick={this.handleClick}>
-                Open Section 1
-              </button>
-              <div className="content">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-              </div>
-              <button className="collapsible" onClick={this.handleClick}>
-                Open Section 2
-              </button>
-              <div className="content">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-              </div>
-              <button className="collapsible" onClick={this.handleClick}>
-                Open Section 3
-              </button>
-              <div className="content">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-              </div>
 
               {this.state.product.stock > 0 ? (
                 <div className="buying-buttons">

@@ -49,7 +49,13 @@ export default class Nav extends Component {
                 src={`data:;base64,${localStorage.profilePhoto}`}
                 alt=""
               />
-            ) : null}
+            ) : (
+              <img
+                className="profile-pic"
+                src="https://via.placeholder.com/250"
+                alt=""
+              />
+            )}
             <Logout />
             <Link className="button" to={`/Cart/${localStorage._id}`}>
               <i className="fa fa-shopping-cart" />

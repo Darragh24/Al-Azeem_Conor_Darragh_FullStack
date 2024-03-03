@@ -94,7 +94,7 @@
 }
 
 .form-login-button {
-  background-color: #008000;
+  background-color: #00B000;
   border-radius: 5px;
   color: white;
   padding: 5px;
@@ -104,7 +104,7 @@
 }
 
 .form-register-button {
-  background-color: #008000;
+  background-color: #00d000;
   border-radius: 5px;
   color: white;
   padding: 5px;
@@ -114,7 +114,7 @@
 }
 
 .form-cancel-button {
-  background-color: #500000;
+  background-color: #b00000;
   color: white;
   border-radius: 5px;
   padding: 5px;
@@ -124,7 +124,7 @@
 }
 
 .form-register-button:hover {
-  background-color: #009900;
+  background-color: #00d900;
   border-radius: 5px;
   color: white;
   padding: 5px;
@@ -138,7 +138,7 @@
 }
 
 .form-register-cancel-button {
-  background-color: #500000;
+  background-color: #b00000;
   width: auto;
   color: white;
   border-radius: 5px;
@@ -149,7 +149,7 @@
 }
 
 .form-login-button:hover {
-  background-color: #009900;
+  background-color: #00d900;
 }
 
 .form-cancel-button:hover {
@@ -162,7 +162,7 @@
 }
 
 .add-button {
-  background-color: #006600;
+  background-color: #00b600;
   border-radius: 5px;
   color: white;
   padding: 5px;
@@ -172,7 +172,7 @@
 }
 
 .cancel-button {
-  background-color: #500000;
+  background-color: #b00000;
   width: 140px;
   color: white;
   border-radius: 5px;
@@ -183,7 +183,7 @@
 }
 
 .add-button:hover {
-  background-color: #009900;
+  background-color: #00d900;
 }
 
 .cancel-button:hover {
